@@ -204,3 +204,22 @@ Ingrese su opción: """)
         conexion.close()
         
         sys.exit()
+
+
+
+
+"""
+tablas
+
+
+datos = [
+    {"Nombre": "Juan", "Edad": 25},
+    {"Nombre": "Luka", "Edad": 18}
+]
+
+
+# Imprimir como una tabla
+print(f"{'No.':<5} {'Nombre':<10} {'Edad':<5}")
+for i, persona in enumerate(datos, start=1):
+    print(f"{i:<5} {persona['Nombre']:<10} {persona['Edad']:<5}")
+"""
