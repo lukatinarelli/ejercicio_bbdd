@@ -126,23 +126,44 @@ Ingrese su opción: """)
 
         os.system('cls' if os.name == 'nt' else 'clear')
 
-        try:
-            # 
-            resultados = cursor.execute(f"SELECT * FROM {tablas[tbl - 1]}").fetchall()
-            
 
+        try:
+            # Guardamos la información en una variable
+            columnas = cursor.execute(f"PRAGMA table_info({tablas[tbl - 1]})").fetchall()
+            
+            
+            
+            # Comprobamos si hay columnas
+            if columnas:
+                print(chr(27) + "[32m" + f"Atributos de la tabla '{tablas[tbl - 1]}':" + chr(27) + "[0m")
+                for columna in columnas:
+                    nombre_columna = columna[1]
+                    tipo_dato = columna[2]
+                    print(f"Nombre: {nombre_columna}, Tipo: {tipo_dato}")
+            else:
+                print(chr(27) + "[33m" + f"No se encontraron atributos en la tabla '{tablas[tbl - 1]}'." + chr(27) + "[0m")
+
+        except sqlite3.Error as e: # Mostramos el error si hubiera
+            print(chr(27) + "[31m" + f"Error en la consulta: {e}" + chr(27) + "[0m")
+
+
+        try:
+            # Ejecutar la consulta SELECT
+            cursor.execute("SELECT * FROM cliente")
+            
+            # Obtener todos los registros
+            resultados = cursor.fetchall()
             
             # Comprobar si hay resultados
             if resultados:
                 print(chr(27) + "[32m" + "Resultados encontrados:" + chr(27) + "[0m")
                 for fila in resultados:
-                    print(fila)
+                    print(f"ID: {fila[0]}, Nombre: {fila[1]}, Email: {fila[2]}")
             else:
                 print(chr(27) + "[33m" + "No se encontraron registros." + chr(27) + "[0m")
 
         except sqlite3.Error as e:
             print(chr(27) + "[31m" + f"Error en la consulta: {e}" + chr(27) + "[0m")
-
 
 
 
