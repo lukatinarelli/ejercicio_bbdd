@@ -10,7 +10,7 @@ os.system('cls' if os.name == 'nt' else 'clear')
 
 
 while True:
-    tablas = [nombre[0] for nombre in cursor.execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()]
+    tablas = [nombre[0] for nombre in cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name != 'sqlite_sequence';").fetchall()]
     op = False
 
     op = input("""¿Qué desea hacer?
@@ -96,7 +96,7 @@ Ingrese su opción: """)
             print(f"    {x}. {tablas[x - 1]}")
             
             
-        tbl = input()
+        tbl = int(input("Ingrese su opción: "))
         
         
         
@@ -121,8 +121,27 @@ Ingrese su opción: """)
             
             print(f"    {x}. {tablas[x - 1]}")
 
+        tbl = int(input("Ingrese su opción: "))
 
 
+        os.system('cls' if os.name == 'nt' else 'clear')
+
+        try:
+            # 
+            resultados = cursor.execute(f"SELECT * FROM {tablas[tbl - 1]}").fetchall()
+            
+
+            
+            # Comprobar si hay resultados
+            if resultados:
+                print(chr(27) + "[32m" + "Resultados encontrados:" + chr(27) + "[0m")
+                for fila in resultados:
+                    print(fila)
+            else:
+                print(chr(27) + "[33m" + "No se encontraron registros." + chr(27) + "[0m")
+
+        except sqlite3.Error as e:
+            print(chr(27) + "[31m" + f"Error en la consulta: {e}" + chr(27) + "[0m")
 
 
 
