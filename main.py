@@ -23,7 +23,7 @@ while True:
 Ingrese su opción: """)
 
 
-    if op == "1":
+    if op == "1": # Crear tablas:
         os.system('cls' if os.name == 'nt' else 'clear')
         
         nombre = input("¿Qué nombre quiere ponerle a la tabla? ")
@@ -32,7 +32,7 @@ Ingrese su opción: """)
         lista_atributos = []
         lista_atributos_tipos = [] 
         
-        while True:
+        while True: # Guardar los atributos de la tabla nueva
             os.system('cls' if os.name == 'nt' else 'clear')
             
             print(chr(27) + "[1;31m" + "Recuerda que el nombre de los atributos no puede tener espacios ni acentos." + chr(27) + "[;m")
@@ -46,7 +46,7 @@ Ingrese su opción: """)
         os.system('cls' if os.name == 'nt' else 'clear')
         
         
-        for i in lista_atributos:
+        for i in lista_atributos: # Guardar el tipo de cada atributo
             os.system('cls' if os.name == 'nt' else 'clear')
             
             print("¿Cuál es el tipo de dato de cada atributo? (texto o entero)")
@@ -60,28 +60,51 @@ Ingrese su opción: """)
                 
         os.system('cls' if os.name == 'nt' else 'clear')
         
-        print(lista_atributos)
-        print(lista_atributos_tipos)
         
-        
-        
-        sentencia = f"CREATE TABLE IF NOT EXISTS {nombre} (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+        # Hacer la sentencia para crear la tabla
+        sentencia = f"CREATE TABLE IF NOT EXISTS {nombre} ( id INTEGER PRIMARY KEY AUTOINCREMENT"
         
         for i in range(len(lista_atributos)):
-            sentencia += f"{lista_atributos[i]} {lista_atributos_tipos[i]},"
+            sentencia += f", {lista_atributos[i]} {lista_atributos_tipos[i]}"
         
         sentencia += ");"
         
-        cursor.execute(sentencia)
+        # Ejecutar la sentencia
+        try:
+            cursor.execute(sentencia)
+            print(chr(27) + "[32m" + "La tabla se ha creado correctamente." + chr(27) + "[0m")  # Texto en verde
+
+        except sqlite3.Error as e:
+            print(chr(27) + "[31m" + f"Error al crear la tabla: {e}" + chr(27) + "[0m")  # Texto en rojo
+
         
         
-        
+        if input("\nQuiéres hacer otra operación (S/N)? ").lower() == "n":
+            op = "6"
         
 
-        input("\nQuiéres hacer otra operación? ")
+    elif op == "2": # Agregar información
+        os.system('cls' if os.name == 'nt' else 'clear')
         
-    elif op == "2":
-        input()
+        print("¿En que tabla desea insertar información?")
+        
+        x = 0
+
+        for i in tablas:
+            x += 1
+            
+            print(f"    {x}. {tablas[x - 1]}")
+            
+            
+        tbl = input()
+        
+        
+        
+        
+        
+        
+        if input("\nQuiéres hacer otra operación (S/N)? ").lower() == "n":
+            op = "6"
 
 
 
@@ -89,7 +112,7 @@ Ingrese su opción: """)
         os.system('cls' if os.name == 'nt' else 'clear')
 
 
-        print("En que tabla desea consultar información?")
+        print("¿En que tabla desea consultar información?")
         
         x = 0
 
@@ -106,9 +129,10 @@ Ingrese su opción: """)
 
 
 
-        input("\nQuiéres hacer otra operación? ")
+        if input("\nQuiéres hacer otra operación (S/N)? ").lower() == "n":
+            op = "6"
 
-    elif op == "6":
+    if op == "6":
         sys.exit()
 
         conexion.commit()
