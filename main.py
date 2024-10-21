@@ -79,10 +79,13 @@ Ingrese su opción: """)
 
         
         
-        if input("\nQuiéres hacer otra operación (S/N)? ").lower() == "n":
+        if input("\nQuiéres hacer otra operación (S/N)? ").lower() == "s":
+            op = "0"
+        else:
             op = "6"
         
-
+        
+        os.system('cls' if os.name == 'nt' else 'clear')
     elif op == "2": # Agregar información
         os.system('cls' if os.name == 'nt' else 'clear')
         
@@ -103,11 +106,13 @@ Ingrese su opción: """)
         
         
         
-        if input("\nQuiéres hacer otra operación (S/N)? ").lower() == "n":
+        if input("\nQuiéres hacer otra operación (S/N)? ").lower() == "s":
+            op = "0"
+        else:
             op = "6"
 
 
-
+        os.system('cls' if os.name == 'nt' else 'clear')
     elif op == "3":
         os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -127,50 +132,37 @@ Ingrese su opción: """)
         os.system('cls' if os.name == 'nt' else 'clear')
 
 
-        try:
-            # Guardamos la información en una variable
-            columnas = cursor.execute(f"PRAGMA table_info({tablas[tbl - 1]})").fetchall()
+        # Guardamos los atributos en una variable
+        columnas = cursor.execute(f"PRAGMA table_info({tablas[tbl - 1]})").fetchall()
+        
+        # Guardamos la información en una variable
+        resultados = cursor.execute(f"SELECT * FROM {tablas[tbl - 1]}").fetchall()
+    
+        if resultados: # Comprobamos si hay información
+            print(chr(27) + "[32m" + f"Resultados encontrados:" + chr(27) + "[0m")
+                
+            y = 0
             
+            for i in range(len(columnas)):
+                print(f"{columnas[y][1].capitalize()} = {resultados[0][y]}")
+                
+                y += 1
+        else:
+            print(chr(27) + "[33m" + f"No se encontraron registros." + chr(27) + "[0m")
             
-            
-            # Comprobamos si hay columnas
-            if columnas:
-                print(chr(27) + "[32m" + f"Atributos de la tabla '{tablas[tbl - 1]}':" + chr(27) + "[0m")
-                for columna in columnas:
-                    nombre_columna = columna[1]
-                    tipo_dato = columna[2]
-                    print(f"Nombre: {nombre_columna}, Tipo: {tipo_dato}")
-            else:
-                print(chr(27) + "[33m" + f"No se encontraron atributos en la tabla '{tablas[tbl - 1]}'." + chr(27) + "[0m")
 
-        except sqlite3.Error as e: # Mostramos el error si hubiera
-            print(chr(27) + "[31m" + f"Error en la consulta: {e}" + chr(27) + "[0m")
-
-
-        try:
-            # Ejecutar la consulta SELECT
-            cursor.execute("SELECT * FROM cliente")
-            
-            # Obtener todos los registros
-            resultados = cursor.fetchall()
-            
-            # Comprobar si hay resultados
-            if resultados:
-                print(chr(27) + "[32m" + "Resultados encontrados:" + chr(27) + "[0m")
-                for fila in resultados:
-                    print(f"ID: {fila[0]}, Nombre: {fila[1]}, Email: {fila[2]}")
-            else:
-                print(chr(27) + "[33m" + "No se encontraron registros." + chr(27) + "[0m")
-
-        except sqlite3.Error as e:
-            print(chr(27) + "[31m" + f"Error en la consulta: {e}" + chr(27) + "[0m")
-
-
-
-
-
-        if input("\nQuiéres hacer otra operación (S/N)? ").lower() == "n":
+        if input("\nQuiéres hacer otra operación (S/N)? ").lower() == "s":
+            op = "0"
+        else:
             op = "6"
+            
+            
+        os.system('cls' if os.name == 'nt' else 'clear')
+    else:
+        os.system('cls' if os.name == 'nt' else 'clear')
+
+        print(chr(27) + "[1;31m" + "Opción inválida. Intente nuevamente\n" + chr(27) + "[;m")
+        
 
     if op == "6":
         sys.exit()
@@ -180,10 +172,7 @@ Ingrese su opción: """)
 
 
 
-    else:
-        os.system('cls' if os.name == 'nt' else 'clear')
-
-        print(chr(27) + "[1;31m" + "Opción inválida. Intente nuevamente\n" + chr(27) + "[;m")
+    
 
 
 
