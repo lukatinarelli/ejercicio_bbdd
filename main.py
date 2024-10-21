@@ -86,6 +86,7 @@ Ingrese su opción: """)
         
         
         os.system('cls' if os.name == 'nt' else 'clear')
+        
     elif op == "2": # Agregar información
         os.system('cls' if os.name == 'nt' else 'clear')
         
@@ -99,10 +100,35 @@ Ingrese su opción: """)
             print(f"    {x}. {tablas[x - 1]}")
             
             
-        tbl = int(input("Ingrese su opción: "))
+        x = int(input("Ingrese su opción: "))
+        
+        os.system('cls' if os.name == 'nt' else 'clear')
         
         
+        datos = []
+        columnas = cursor.execute(f"PRAGMA table_info({tablas[x - 1]})").fetchall()
+        comando = f"INSERT INTO {tablas[x - 1]} ("
+
+        # Recopilar los nombres de las columnas y los datos del usuario
+        for atributos in columnas:
+            datos.append(input(f"{atributos[1].capitalize()}: "))
+            comando += f'{atributos[1]}, '
+
+        # Eliminar la última coma y espacio
+        comando = comando[:-2]
+        comando += ') VALUES ('
+
+        # Añadir los placeholders para los valores
+        comando += ', '.join(['?'] * len(columnas))  # Crea una cadena con placeholders
+        comando += ')'
         
+        
+        # Ejecutamos el comando para insertar usando placeholders
+        try:
+            cursor.execute(comando, datos)  # Pasa los datos como segundo argumento
+            print(chr(27) + "[32m" + "Registro insertado correctamente." + chr(27) + "[0m")
+        except sqlite3.Error as e:
+            print(chr(27) + "[31m" + f"Error al insertar el registro: {e}" + chr(27) + "[0m")
         
         
         
@@ -113,6 +139,7 @@ Ingrese su opción: """)
 
 
         os.system('cls' if os.name == 'nt' else 'clear')
+        
     elif op == "3":
         os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -141,12 +168,19 @@ Ingrese su opción: """)
         if resultados: # Comprobamos si hay información
             print(chr(27) + "[32m" + f"Resultados encontrados:" + chr(27) + "[0m")
                 
-            y = 0
+            z = "--------------------------------------------------------------------------\n"
             
-            for i in range(len(columnas)):
-                print(f"{columnas[y][1].capitalize()} = {resultados[0][y]}")
+            for i in range(len(resultados)):
+                z += f"{i + 1}. " 
                 
-                y += 1
+                for j in range(len(columnas)):
+                    z += f"{columnas[j][1].capitalize()} = {resultados[i][j]}, "
+                
+                z = z[:-2]
+                z += "\n--------------------------------------------------------------------------\n"
+            
+            z = z[:-1]
+            print(z)
         else:
             print(chr(27) + "[33m" + f"No se encontraron registros." + chr(27) + "[0m")
             
@@ -158,6 +192,7 @@ Ingrese su opción: """)
             
             
         os.system('cls' if os.name == 'nt' else 'clear')
+        
     else:
         os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -165,23 +200,7 @@ Ingrese su opción: """)
         
 
     if op == "6":
-        sys.exit()
-
         conexion.commit()
         conexion.close()
-
-
-
-    
-
-
-
-
-    #salida = cursor.execute('''SELECT * FROM cliente''').fetchall() 
-    
-
-    #for i in salida: 
-        #print(i) 
-
-
-    
+        
+        sys.exit()
