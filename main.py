@@ -15,11 +15,12 @@ while True:
 
     op = input("""¿Qué desea hacer?
     1. Crear tabla
-    2. Insertar datos
-    3. Consultar datos
-    4. Modificar datos
-    5. Eliminar datos
-    6. Salir
+    2. Eliminar tabla
+    3. Insertar datos
+    4. Consultar datos
+    5. Modificar datos
+    6. Eliminar datos
+    7. Salir
 Ingrese su opción: """)
 
 
@@ -82,12 +83,18 @@ Ingrese su opción: """)
         if input("\nQuiéres hacer otra operación (S/N)? ").lower() == "s":
             op = "0"
         else:
-            op = "6"
+            op = "7"
         
         
         os.system('cls' if os.name == 'nt' else 'clear')
         
-    elif op == "2": # Agregar información
+    elif op == "3": # Eliminar tablas
+        
+        
+        
+        
+        
+    elif op == "3": # Agregar información
         os.system('cls' if os.name == 'nt' else 'clear')
         
         print("¿En que tabla desea insertar información?")
@@ -135,12 +142,12 @@ Ingrese su opción: """)
         if input("\nQuiéres hacer otra operación (S/N)? ").lower() == "s":
             op = "0"
         else:
-            op = "6"
+            op = "7"
 
 
         os.system('cls' if os.name == 'nt' else 'clear')
         
-    elif op == "3":
+    elif op == "4":
         os.system('cls' if os.name == 'nt' else 'clear')
 
 
@@ -188,7 +195,7 @@ Ingrese su opción: """)
         if input("\nQuiéres hacer otra operación (S/N)? ").lower() == "s":
             op = "0"
         else:
-            op = "6"
+            op = "7"
             
             
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -199,7 +206,7 @@ Ingrese su opción: """)
         print(chr(27) + "[1;31m" + "Opción inválida. Intente nuevamente\n" + chr(27) + "[;m")
         
 
-    if op == "6":
+    if op == "7":
         conexion.commit()
         conexion.close()
         
