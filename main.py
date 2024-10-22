@@ -88,11 +88,43 @@ Ingrese su opción: """)
         
         os.system('cls' if os.name == 'nt' else 'clear')
         
-    elif op == "3": # Eliminar tablas
+    elif op == "2": # Eliminar tablas
+        os.system('cls' if os.name == 'nt' else 'clear')
+        
+        print("¿Qué tabla desea eliminar?")
+        
+        x = 0
+
+        for i in tablas:
+            x += 1
+            
+            print(f"    {x}. {tablas[x - 1]}")
+            
+            
+        x = int(input("Ingrese su opción: "))
+        
+        os.system('cls' if os.name == 'nt' else 'clear')
         
         
+        try:
+            # Ejecutar la consulta para eliminar la tabla
+            cursor.execute(f"DROP TABLE IF EXISTS {tablas[x - 1]}")
+            
+            # Confirmación de que la tabla fue eliminada
+            print(chr(27) + "[32m" + f"La tabla '{tablas[x - 1]}' ha sido eliminada correctamente." + chr(27) + "[0m")
+
+        except sqlite3.Error as e:
+            # Manejo de errores
+            print(chr(27) + "[31m" + f"Error al eliminar la tabla: {e}" + chr(27) + "[0m")
         
         
+        if input("\nQuiéres hacer otra operación (S/N)? ").lower() == "s":
+            op = "0"
+        else:
+            op = "7"
+        
+        
+        os.system('cls' if os.name == 'nt' else 'clear')
         
     elif op == "3": # Agregar información
         os.system('cls' if os.name == 'nt' else 'clear')
