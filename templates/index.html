@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestor de Base de Datos</title>
     <link rel="stylesheet" href="/static/style.css">
-    <!-- <link rel="icon" href="/assets/icono.png" type="image/png"> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <h1>Gestor de Base de Datos</h1>
@@ -13,6 +13,7 @@
     <!-- Menú de Opciones -->
     <div id="menu">
         <button onclick="showSection('crear-tabla')">Crear Tabla</button>
+        <button onclick="showSection('mostrar-tablas')">Mostrar Tablas</button>
         <button onclick="showSection('eliminar-tabla')">Eliminar Tabla</button>
         <button onclick="showSection('insertar-datos')">Insertar Datos</button>
         <button onclick="showSection('consultar-datos')">Consultar Datos</button>
@@ -32,6 +33,35 @@
         </form>
     </section>
 
+
+
+    <!-- Mostrar las tablas -->
+    <section id="mostrar-tablas" class="form-section" style="display:none;">
+        <h2>Tablas en la Base de Datos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre de la Tabla</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if tablas %}
+                    {% for tabla in tablas %}
+                        <tr>
+                            <td>{{ tabla[0] }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td>No hay tablas disponibles.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </section>
+
+
+
     <section id="eliminar-tabla" class="form-section" style="display:none;">
         <h2>Eliminar Tabla</h2>
         <form id="form-eliminar-tabla" action="/delete_table" method="post">
@@ -41,17 +71,57 @@
         </form>
     </section>
 
-    <!-- Agrega las demás secciones como insertar-datos, consultar-datos, etc. de forma similar -->
 
-    <section id="consultar-datos'" class="form-section" style="display:none;">
-        <h2>Consulatr Datos</h2>
-        <form id="form-consultar-datos'" action="/insert_info" method="post">
-            <label for="consultar-datos-table-name">Nombre de la Tabla:</label>
-            <input type="text" id="consultar-datos-table-name" name="table_name" required>
 
+
+
+
+
+
+
+    <!-- Consulcar información -->
+    <section id="consultar-datos" class="form-section" style="display:none;">
+        <h2>Consultar Información</h2>
+        
+        <label for="table_name">Selecciona la Tabla:</label>
+        <select name="table_name" id="table_name">
+            <option value="" disabled selected>Seleccione una tabla</option> <!-- Opción en blanco -->
+            {% if tablas %}
+                {% for tabla in tablas %}
+                    <option value="{{ tabla[0] }}">{{ tabla[0] }}</option>
+                {% endfor %}
+            {% endif %}
+        </select>
+    
+        <div id="resultados">
+            <!-- Aquí se mostrará la tabla con la información -->
+        </div>
+    </section>
+    
+
+
+
+
+
+
+
+
+    <section id="insertar-datos" class="form-section" style="display:none;">
+        <h2>Insertar Datos</h2>
+        <form action="/insertar-datos" method="POST">
+            <label for="table_name">Selecciona Tabla:</label>
+            <select name="table_name" id="table_name">
+                {% if tablas %}
+                    {% for tabla in tablas %}
+                        <option value="{{ tabla[0] }}">{{ tabla[0] }}</option>
+                    {% endfor %}
+                {% endif %}
+            </select>
+            <label for="data">Datos (separados por comas):</label>
+            <input type="text" id="data" name="data" required>
+            <button type="submit">Insertar</button>
         </form>
     </section>
-
 
 
     <script src="/static/script.js"></script>
