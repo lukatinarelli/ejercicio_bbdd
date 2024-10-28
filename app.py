@@ -22,6 +22,8 @@ def consultar_tabla():
     conn = connect_db()
     cursor = conn.cursor()
     
+    columnas = cursor.execute(f"PRAGMA table_info({table_name})").fetchall()
+    
     datos = cursor.execute(f"SELECT * FROM {table_name};").fetchall()  # Consulta todos los datos de la tabla seleccionada
     conn.close()
 
@@ -30,9 +32,8 @@ def consultar_tabla():
     tabla_html += '<table><thead><tr>'
     if datos:
         # Añadir encabezados de columna
-        x = len(datos[0])
-        for col in ______:
-            tabla_html += '<th>Columna {}</th>'.format(col + 1)  # Cambia esto para mostrar nombres de columnas reales si es necesario
+        for col in columnas:
+            tabla_html += '<th>{}</th>'.format(col[1].capitalize())  # Cambia esto para mostrar nombres de columnas reales si es necesario   
         tabla_html += '</tr></thead><tbody>'
         
         # Añadir filas de datos
