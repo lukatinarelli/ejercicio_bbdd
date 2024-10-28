@@ -4,26 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestor de Base de Datos</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- <link rel="icon" href="/assets/icono.png" type="image/png"> -->
 </head>
 <body>
     <h1>Gestor de Base de Datos</h1>
 
-    <!-- Sección para Crear una Nueva Tabla -->
-    <section id="crear-tabla">
-        <h2>1. Crear Tabla</h2>
+    <!-- Menú de Opciones -->
+    <div id="menu">
+        <button onclick="showSection('crear-tabla')">Crear Tabla</button>
+        <button onclick="showSection('eliminar-tabla')">Eliminar Tabla</button>
+        <button onclick="showSection('insertar-datos')">Insertar Datos</button>
+        <button onclick="showSection('consultar-datos')">Consultar Datos</button>
+        <button onclick="showSection('modificar-datos')">Modificar Datos</button>
+        <button onclick="showSection('eliminar-datos')">Eliminar Datos</button>
+    </div>
+
+    <!-- Secciones de Formularios, ocultas por defecto -->
+    <section id="crear-tabla" class="form-section" style="display:none;">
+        <h2>Crear Tabla</h2>
         <form id="form-crear-tabla" action="/create_table" method="post">
             <label for="table-name">Nombre de la Tabla:</label>
             <input type="text" id="table-name" name="table_name" required>
-            <label for="columns">Definir Columnas (nombre tipo, ej. nombre TEXT):</label>
-            <input type="text" id="columns" name="columns" placeholder="columna1 TEXT, columna2 INTEGER" required>
+            <label for="columns">Definir Columnas (ej. nombre TEXT):</label>
+            <input type="text" id="columns" name="columns" required>
             <button type="submit">Crear Tabla</button>
         </form>
     </section>
 
-    <!-- Sección para Eliminar una Tabla -->
-    <section id="eliminar-tabla">
-        <h2>2. Eliminar Tabla</h2>
+    <section id="eliminar-tabla" class="form-section" style="display:none;">
+        <h2>Eliminar Tabla</h2>
         <form id="form-eliminar-tabla" action="/delete_table" method="post">
             <label for="delete-table-name">Nombre de la Tabla:</label>
             <input type="text" id="delete-table-name" name="table_name" required>
@@ -31,59 +41,19 @@
         </form>
     </section>
 
-    <!-- Sección para Insertar Datos -->
-    <section id="insertar-datos">
-        <h2>3. Insertar Datos</h2>
-        <form id="form-insertar-datos" action="/insert_data" method="post">
-            <label for="insert-table-name">Nombre de la Tabla:</label>
-            <input type="text" id="insert-table-name" name="table_name" required>
-            <label for="data">Datos (columna1=valor1, columna2=valor2):</label>
-            <input type="text" id="data" name="data" placeholder="nombre='Juan', edad=25" required>
-            <button type="submit">Insertar Datos</button>
+    <!-- Agrega las demás secciones como insertar-datos, consultar-datos, etc. de forma similar -->
+
+    <section id="consultar-datos'" class="form-section" style="display:none;">
+        <h2>Consulatr Datos</h2>
+        <form id="form-consultar-datos'" action="/insert_info" method="post">
+            <label for="consultar-datos-table-name">Nombre de la Tabla:</label>
+            <input type="text" id="consultar-datos-table-name" name="table_name" required>
+
         </form>
     </section>
 
-    <!-- Sección para Consultar Datos -->
-    <section id="consultar-datos">
-        <h2>4. Consultar Datos</h2>
-        <form id="form-consultar-datos" action="/query_data" method="post">
-            <label for="query-table-name">Nombre de la Tabla:</label>
-            <input type="text" id="query-table-name" name="table_name" required>
-            <label for="conditions">Condiciones (opcional):</label>
-            <input type="text" id="conditions" name="conditions" placeholder="edad > 20">
-            <button type="submit">Consultar Datos</button>
-        </form>
-        <div id="resultados-consulta">
-            <!-- Aquí se mostrarán los resultados de la consulta -->
-        </div>
-    </section>
 
-    <!-- Sección para Modificar Datos -->
-    <section id="modificar-datos">
-        <h2>5. Modificar Datos</h2>
-        <form id="form-modificar-datos" action="/update_data" method="post">
-            <label for="update-table-name">Nombre de la Tabla:</label>
-            <input type="text" id="update-table-name" name="table_name" required>
-            <label for="set-values">Valores a Modificar (columna=valor):</label>
-            <input type="text" id="set-values" name="set_values" placeholder="nombre='Ana'" required>
-            <label for="update-conditions">Condiciones (ej. id=1):</label>
-            <input type="text" id="update-conditions" name="conditions" required>
-            <button type="submit">Modificar Datos</button>
-        </form>
-    </section>
 
-    <!-- Sección para Eliminar Datos -->
-    <section id="eliminar-datos">
-        <h2>6. Eliminar Datos</h2>
-        <form id="form-eliminar-datos" action="/delete_data" method="post">
-            <label for="delete-data-table-name">Nombre de la Tabla:</label>
-            <input type="text" id="delete-data-table-name" name="table_name" required>
-            <label for="delete-conditions">Condiciones (ej. id=1):</label>
-            <input type="text" id="delete-conditions" name="conditions" required>
-            <button type="submit">Eliminar Datos</button>
-        </form>
-    </section>
-
-    <script src="script.js"></script>
+    <script src="/static/script.js"></script>
 </body>
 </html>
