@@ -1,0 +1,1 @@
+console.log("JavaScript está conectado y funcionando.");
