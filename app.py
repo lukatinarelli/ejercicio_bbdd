@@ -69,16 +69,21 @@ def insertar_datos():
     conn.close()
     
     
-    insert_html = ''
+    insert_html = '<form id="inserta"> <h2>Tablas:</h2>'
 
     for col in columnas:
         col_name = col[1].capitalize()
-        is_primary_key = col[5] == 1  # Verificar si es Primary Key con el índice 5
+        col_type = col[2].capitalize()
+        is_auto_increment = col[2].upper() == 'INTEGER' and col[5] == 1
         
-        insert_html += f'<p>{col_name}: </p> <input type="text">'
+        if is_auto_increment:
+            insert_html += f'<p>{col_name} (Auto Increment, no necesita valor)</p>'
+        else:
+            insert_html += f'<p>{col_name} ({col_type}):</p>'
+            insert_html += f'<input type="text" name="{col_name}" required><br>'
                 
     
-    insert_html += '</br> <input type="button" value="Insertar" />'
+    insert_html += '</br> <input type="submit" value="Insertar Datos" /> </form>'
   
     return insert_html  # Devolver el HTML generado
 
