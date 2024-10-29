@@ -79,12 +79,12 @@
 
 
 
-    <!-- Consulcar información -->
+    <!-- Consultar información -->
     <section id="consultar-datos" class="form-section" style="display:none;">
         <h2>Consultar Información</h2>
         
         <label for="table_name">Selecciona la Tabla:</label>
-        <select name="table_name" id="table_name">
+        <select name="table_name" id="table_name_consultar">
             <option value="" disabled selected>Seleccione una tabla</option> <!-- Opción en blanco -->
             {% if tablas %}
                 {% for tabla in tablas %}
@@ -93,6 +93,8 @@
             {% endif %}
         </select>
     
+        </br></br>
+
         <div id="resultados">
             <!-- Aquí se mostrará la tabla con la información -->
         </div>
@@ -105,21 +107,24 @@
 
 
 
-
+    <!-- Insertar información -->
     <section id="insertar-datos" class="form-section" style="display:none;">
         <h2>Insertar Datos</h2>
-        <form action="/insertar-datos" method="POST">
-            <label for="table_name">Selecciona Tabla:</label>
-            <select name="table_name" id="table_name">
-                {% if tablas %}
-                    {% for tabla in tablas %}
-                        <option value="{{ tabla[0] }}">{{ tabla[0] }}</option>
-                    {% endfor %}
-                {% endif %}
-            </select>
-            <label for="data">Datos (separados por comas):</label>
-            <input type="text" id="data" name="data" required>
-            <button type="submit">Insertar</button>
+        
+        <label for="table_name">Selecciona la Tabla:</label>
+        <select name="table_name" id="table_name_insertar">
+            <option value="" disabled selected>Seleccione una tabla</option> <!-- Opción en blanco -->
+            {% if tablas %}
+                {% for tabla in tablas %}
+                    <option value="{{ tabla[0] }}">{{ tabla[0] }}</option>
+                {% endfor %}
+            {% endif %}
+        </select>
+
+        </br></br>
+    
+        <form id="insertar">
+            <!-- Aquí se insertará la información -->
         </form>
     </section>
 
