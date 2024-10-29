@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 
 app = Flask(__name__)
@@ -60,16 +60,16 @@ def consultar_datos():
 
 
 @app.route('/insertar', methods=['POST'])
-def insertar_datos():
+def insertar_datos():    
     table_name = request.form['table_name_insertar']  # Obtener el nombre de la tabla del formulario
     conn = connect_db()
     cursor = conn.cursor()
         
     columnas = cursor.execute(f"PRAGMA table_info({table_name})").fetchall()
-    conn.close()
     
-    
-    insert_html = '<form id="inserta"> <h2>Tablas:</h2>'
+    insert_html = '<form id="inserta" action="/inserta" method="POST"> <h2>Insertar en la tabla: {}</h2>'.format(table_name)
+
+    insert_html += f'<input type="hidden" name="table_name_insertar" value="{table_name}">' # Nombre de la tabla
 
     for col in columnas:
         col_name = col[1].capitalize()
@@ -82,11 +82,45 @@ def insertar_datos():
             insert_html += f'<p>{col_name} ({col_type}):</p>'
             insert_html += f'<input type="text" name="{col_name}" required><br>'
                 
-    
-    insert_html += '</br> <input type="submit" value="Insertar Datos" /> </form>'
+    insert_html += '</br> <input id="inserta_dato" type="submit" value="Insertar Datos" /> </form>'
   
     return insert_html  # Devolver el HTML generado
 
+
+@app.route('/inserta', methods=['POST'])
+def inserta_datos():
+    table_name = request.form['table_name_insertar']
+
+    conn = connect_db()
+    cursor = conn.cursor()
+    
+    # Obtener columnas de la tabla
+    columnas = cursor.execute(f"PRAGMA table_info({table_name})").fetchall()
+    
+    # Preparar un diccionario para insertar los datos
+    data_to_insert = {}
+    
+    for col in columnas:
+        col_name = col[1].capitalize()
+        is_auto_increment = col[2].upper() == 'INTEGER' and col[5] == 1
+        
+        if not is_auto_increment:
+            data_to_insert[col_name] = request.form[col_name]
+    
+    columns = ', '.join(data_to_insert.keys())
+    placeholders = ', '.join(['?'] * len(data_to_insert))
+    sql = f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders})"
+    
+    try:
+        cursor.execute(sql, tuple(data_to_insert.values()))
+        conn.commit()
+    except Exception as e:
+        return f"Error: {str(e)}", 400  # Manejo de errores
+    finally:
+        conn.close()  # Asegúrate de cerrar la conexión
+    
+    # Redirigir a la página principal después de la inserción
+    return redirect(url_for('index'))  # 'index' es el nombre de la función de tu página principal
 
 
 if __name__ == '__main__':
