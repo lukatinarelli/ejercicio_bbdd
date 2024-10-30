@@ -60,7 +60,7 @@ def consultar_datos():
 
 
 @app.route('/insertar', methods=['POST'])
-def insertar_datos():    
+def insertar_datos():
     table_name = request.form['table_name_insertar']  # Obtener el nombre de la tabla del formulario
     conn = connect_db()
     cursor = conn.cursor()
@@ -122,6 +122,49 @@ def inserta_datos():
     # Redirigir a la página principal después de la inserción
     return redirect(url_for('index'))  # 'index' es el nombre de la función de tu página principal
 
+
+@app.route('/eliminar', methods=['POST'])
+def eliminar_datos():
+    table_name = request.form['table_name_eliminar']  # Obtener el nombre de la tabla del formulario
+    conn = connect_db()
+    cursor = conn.cursor()
+    
+    # Obtener las columnas y su información
+    columnas = cursor.execute(f"PRAGMA table_info({table_name})").fetchall()
+    
+    # Obtener los datos de la tabla seleccionada
+    datos = cursor.execute(f"SELECT * FROM {table_name};").fetchall()
+    conn.close()
+
+    # Construir la tabla HTML
+    tabla_html = '<h3>Datos de la Tabla: {}</h3>'.format(table_name)
+    tabla_html += '<table><thead><tr>'
+
+    if datos:
+        # Añadir encabezados de columna y aplicar estilo si es Primary Key
+        for col in columnas:
+            col_name = col[1].capitalize()
+            is_primary_key = col[5] == 1  # Verificar si es Primary Key con el índice 5
+            if is_primary_key:
+                # Añadir clase "primary-key" para aplicar estilo especial
+                tabla_html += f'<th title="Clave primaria" class="primary-key">{col_name}</th>'
+            else:
+                tabla_html += f'<th>{col_name}</th>'
+        
+        
+        tabla_html += '<th>Eliminar registro</th></tr></thead><tbody>'
+        
+        # Añadir filas de datos
+        for fila in datos:
+            tabla_html += '<tr>'
+            for valor in fila:
+                tabla_html += f'<td>{valor}</td>'
+            tabla_html += '<td><button type="button" title="Eliminar registro" id="boton_{fila}">Eliminar</button></td></tr>'
+        tabla_html += '</tbody></table>'
+    else:
+        tabla_html += '<p>No hay datos en esta tabla.</p>'
+
+    return tabla_html  # Devolver el HTML generado
 
 if __name__ == '__main__':
     app.run(debug=True)
