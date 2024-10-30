@@ -148,6 +148,7 @@ def eliminar_datos():
             if is_primary_key:
                 # Añadir clase "primary-key" para aplicar estilo especial
                 tabla_html += f'<th title="Clave primaria" class="primary-key">{col_name}</th>'
+                x = columnas.index(col)
             else:
                 tabla_html += f'<th>{col_name}</th>'
         
@@ -159,7 +160,7 @@ def eliminar_datos():
             tabla_html += '<tr>'
             for valor in fila:
                 tabla_html += f'<td>{valor}</td>'
-            tabla_html += '<td><button type="button" title="Eliminar registro" id="boton_{fila}">Eliminar</button></td></tr>'
+            tabla_html += f'<td><button type="button" title="Eliminar registro" id="boton{fila[x]}">Eliminar</button></td></tr>'
         tabla_html += '</tbody></table>'
     else:
         tabla_html += '<p>No hay datos en esta tabla.</p>'
