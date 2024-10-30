@@ -100,13 +100,6 @@
             <!-- Aquí se mostrará la tabla con la información -->
         </div>
     </section>
-    
-
-
-
-
-
-
 
     <!-- Insertar información -->
     <section id="insertar-datos" class="form-section" style="display:none;">
@@ -125,6 +118,32 @@
         </br></br>
     
         <div id="insertar">
+            <!-- Aquí se insertará la información -->
+        </div>
+    </section>
+
+
+
+
+
+
+    <!-- Eliminar información -->
+    <section id="eliminar-datos" class="form-section" style="display:none;">
+        <h2>Eliminar Información</h2>
+        
+        <label for="table_name">Selecciona la Tabla:</label>
+        <select name="table_name" id="table_name_eliminar">
+            <option value="" disabled selected>Seleccione una tabla</option> <!-- Opción en blanco -->
+            {% if tablas %}
+                {% for tabla in tablas %}
+                    <option value="{{ tabla[0] }}">{{ tabla[0] }}</option>
+                {% endfor %}
+            {% endif %}
+        </select>
+    
+        </br></br>
+
+        <div id="eliminar">
             <!-- Aquí se insertará la información -->
         </div>
     </section>
