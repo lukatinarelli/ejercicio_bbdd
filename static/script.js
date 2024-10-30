@@ -78,8 +78,22 @@ $(document).ready(function(){
     });
 });
 
-
-/*const button = document.getElementById('#boton_{fila}');
-button.addEventListener("click", (event) => {
-    console.log("Button clicked!");
-});*/
+function elimina_datos(id, tabla, columna) {
+    // Enviar la solicitud POST al servidor para eliminar el registro
+    fetch("/elimina", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ id: id, tabla: tabla, columna: columna }) // Enviar los tres parámetros
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert(data.message);  // Muestra mensaje de éxito
+        } else {
+            alert(data.message);  // Muestra mensaje de error
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
