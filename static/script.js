@@ -23,6 +23,13 @@ function showSection(sectionId) {
         // Limpia los resultados
         const resultadosDiv = document.getElementById('insertar');
         resultadosDiv.innerHTML = ''; // Elimina el contenido de los resultados
+    } else if (sectionId === 'eliminar-datos') {
+        const tableSelect = document.getElementById('table_name_eliminar');
+        tableSelect.selectedIndex = 0; // Restablece a la opción en blanco
+        
+        // Limpia los resultados
+        const resultadosDiv = document.getElementById('eliminar');
+        resultadosDiv.innerHTML = ''; // Elimina el contenido de los resultados
     }
 }
 
@@ -56,3 +63,17 @@ $(document).ready(function(){
     });
 });
 
+$(document).ready(function(){
+    $('#table_name_eliminar').change(function() {
+        var tableName = $(this).val(); // Obtener el valor seleccionado
+
+        $.ajax({
+            url: '/eliminar',  // URL a la que se enviarán los datos
+            type: 'POST',  // Método de la solicitud
+            data: { table_name_eliminar: tableName },  // Enviar el nombre de la tabla
+            success: function(response) {
+                $('#eliminar').html(response);  // Insertar la respuesta en el div "resultados"
+            }
+        });
+    });
+});
