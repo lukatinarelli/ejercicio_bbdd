@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 import sqlite3
 
 app = Flask(__name__)
@@ -140,6 +140,8 @@ def eliminar_datos():
     tabla_html = '<h3>Datos de la Tabla: {}</h3>'.format(table_name)
     tabla_html += '<table><thead><tr>'
 
+    x = 0
+
     if datos:
         # Añadir encabezados de columna y aplicar estilo si es Primary Key
         for col in columnas:
@@ -160,12 +162,46 @@ def eliminar_datos():
             tabla_html += '<tr>'
             for valor in fila:
                 tabla_html += f'<td>{valor}</td>'
-            tabla_html += f'<td><button type="button" title="Eliminar registro" id="boton{fila[x]}">Eliminar</button></td></tr>'
-        tabla_html += '</tbody></table>'
+            tabla_html += f'<td><button title="Eliminar registro" onclick="elimina_datos({fila[x]}, \'{table_name}\', \'{x}\')" id="boton{fila[x]}">Eliminar</button></td></tr>'
+        tabla_html += '</tbody></table>'                          #
     else:
         tabla_html += '<p>No hay datos en esta tabla.</p>'
 
     return tabla_html  # Devolver el HTML generado
+
+
+@app.route('/elimina', methods=['POST'])
+def elimina_datos():
+    data = request.get_json()
+    id_registro = data.get('id')      # Obtiene el ID del registro
+    nombre_tabla = data.get('tabla')  # Obtiene el nombre de la tabla
+    columna = data.get('columna')  # Obtiene el nombre de la columna
+
+    if not id_registro or not nombre_tabla or not columna:
+        return jsonify({'status': 'error', 'message': 'ID, tabla o columna no proporcionados'}), 400
+
+    conn = connect_db()
+    cursor = conn.cursor()
+    
+    columnas = cursor.execute(f"PRAGMA table_info({nombre_tabla})").fetchall()
+    
+    try:
+        # Puedes usar la columna aquí si necesitas hacer algo específico con ella.
+        cursor.execute(f"DELETE FROM {nombre_tabla} WHERE {columnas[int(columna)][1]} = ?;", (id_registro,))
+        conn.commit()
+        
+        # Verificar si se eliminó algún registro
+        if cursor.rowcount == 0:
+            return jsonify({'status': 'error', 'message': 'Registro no encontrado'}), 404
+
+        return jsonify({'status': 'success', 'message': f'Registro {id_registro} eliminado de {nombre_tabla}'})
+    
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+    
+    finally:
+        conn.close()
+
 
 if __name__ == '__main__':
     app.run(debug=True)
