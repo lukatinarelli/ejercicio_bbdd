@@ -77,3 +77,9 @@ $(document).ready(function(){
         });
     });
 });
+
+
+/*const button = document.getElementById('#boton_{fila}');
+button.addEventListener("click", (event) => {
+    console.log("Button clicked!");
+});*/
