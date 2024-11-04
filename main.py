@@ -175,7 +175,7 @@ def elimina_datos():
     data = request.get_json()
     id_registro = data.get('id')      # Obtiene el ID del registro
     nombre_tabla = data.get('tabla')  # Obtiene el nombre de la tabla
-    columna = data.get('columna')  # Obtiene el nombre de la columna
+    columna = data.get('columna')  # Obtiene el numero de la columna
 
     if not id_registro or not nombre_tabla or not columna:
         return jsonify({'status': 'error', 'message': 'ID, tabla o columna no proporcionados'}), 400
@@ -187,7 +187,7 @@ def elimina_datos():
     
     try:
         # Puedes usar la columna aquí si necesitas hacer algo específico con ella.
-        cursor.execute(f"DELETE FROM {nombre_tabla} WHERE {columnas[int(columna)][1]} = ?;", (id_registro,))
+        cursor.execute(f"DELETE FROM {nombre_tabla} WHERE {columnas[int(columna)][1]} = ?;", (str(id_registro),))
         conn.commit()
         
         # Verificar si se eliminó algún registro
