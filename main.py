@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import sqlite3
 
 app = Flask(__name__)
+app.secret_key = "12345" # Clave secreta
 
 def connect_db():
     return sqlite3.connect('database/database.db')  # Cambia el nombre de tu base de datos
@@ -187,7 +189,7 @@ def elimina_datos():
     
     try:
         # Puedes usar la columna aquí si necesitas hacer algo específico con ella.
-        cursor.execute(f"DELETE FROM {nombre_tabla} WHERE {columnas[int(columna)][1]} = ?;", (str(id_registro),))
+        cursor.execute(f"DELETE FROM {nombre_tabla} WHERE {columnas[int(columna)][1]} = ?;", (id_registro,))
         conn.commit()
         
         # Verificar si se eliminó algún registro
