@@ -28,11 +28,14 @@ Además, permite crear y eliminar tablas en la base de datos de forma sencilla.
 
 ## Uso
 1. Para iniciar el servidor, ejecuta:
+    ```bash
     python main.py
 
 2. Accede a la aplicación: Entra en tu navegador a http://localhost:5000 para acceder a la interfaz gráfica.
 
+
 Si unicamente quiere usar la interfaz de texto:
+    ```bash
     python db_manager.py
 
 
