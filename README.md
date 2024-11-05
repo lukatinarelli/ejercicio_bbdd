@@ -1,13 +1,10 @@
 # Mi Proyecto de Gestor de Bases de Datos
 
 ## Descripción
-Este es mi primer proyecto "grande", un gestor de bases de datos que permite a los usuarios realizar operaciones CRUD (Crear, Leer, Actualizar y Eliminar) sobre sus datos. La aplicación incluye:
+Este es mi primer proyecto "grande", un gestor de bases de datos que permite a los usuarios realizar operaciones CRUD (Crear, Leer, Actualizar y Eliminar) sobre sus datos. Además, permite crear y eliminar tablas en la base de datos de forma sencilla. La aplicación incluye:
 
  - Interfaz gráfica: construida con HTML, CSS y JavaScript para una experiencia de usuario interactiva.
  - Interfaz de texto: implementada en Python para acceder y gestionar los datos mediante comandos directos.
-
-Además, permite crear y eliminar tablas en la base de datos de forma sencilla.
-
 
 ## Tabla de Contenidos
 - [Instalación](#instalación)
