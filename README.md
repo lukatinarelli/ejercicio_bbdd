@@ -26,7 +26,6 @@ Además, permite crear y eliminar tablas en la base de datos de forma sencilla.
     ```bash
     pip install -r requirements.txt
 
-
 ## Uso
 1. Para iniciar el servidor, ejecuta:
     python main.py
