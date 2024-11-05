@@ -23,7 +23,7 @@ Además, permite crear y eliminar tablas en la base de datos de forma sencilla.
    cd gestor_bbdd
 
 2. Instala las dependencias:
-
+    ```bash
     pip install -r requirements.txt
 
 
