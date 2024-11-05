@@ -14,8 +14,6 @@ Además, permite crear y eliminar tablas en la base de datos de forma sencilla.
 - [Uso](#uso)
 - [Tecnologías Utilizadas](#tecnologías-utilizadas)
 - [Contribución](#contribución)
-- [Licencia](#licencia)
-- [Contacto](#contacto)
 
 
 ## Instalación
@@ -46,5 +44,5 @@ Si unicamente quiere usar la interfaz de texto:
  -HTML/CSS/JavaScript: para la interfaz de usuario en el frontend
 
 
-Contribución
+## Contribución
 ¡Las contribuciones son bienvenidas! Como este es mi primer proyecto usando HTML/CSS/JavaScript junto con Python, pueden haber varios errores o mejoras posibles. Si encuentras algún error o tienes sugerencias, abre un issue o envía un pull request. Aprecio cualquier ayuda para mejorar el proyecto.
