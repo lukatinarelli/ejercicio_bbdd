@@ -15,8 +15,8 @@
         <button onclick="showSection('crear-tabla')">Crear Tabla</button>
         <button onclick="showSection('mostrar-tablas')">Mostrar Tablas</button>
         <button onclick="showSection('eliminar-tabla')">Eliminar Tabla</button>
-        <button onclick="showSection('insertar-datos')">Insertar Datos</button>
         <button onclick="showSection('consultar-datos')">Consultar Datos</button>
+        <button onclick="showSection('insertar-datos')">Insertar Datos</button>
         <button onclick="showSection('modificar-datos')">Modificar Datos</button>
         <button onclick="showSection('eliminar-datos')">Eliminar Datos</button>
         <button onclick="showSection('consola-sql')">Consola SQL</button>
@@ -101,9 +101,10 @@
         </div>
     </section>
 
+
     <!-- Insertar información -->
     <section id="insertar-datos" class="form-section" style="display:none;">
-        <h2>Insertar Datos</h2>
+        <h2>Insertar Información</h2>
         
         <label for="table_name">Selecciona la Tabla:</label>
         <select name="table_name" id="table_name_insertar">
@@ -123,8 +124,11 @@
     </section>
 
 
-
-
+    <!-- Modificar información -->
+    <section id="modificar-datos" class="form-section" style="display:none;">
+        <h2>Modificar Información</h2>
+        
+    </section>
 
 
     <!-- Eliminar información -->
@@ -146,6 +150,24 @@
         <div id="eliminar">
             <!-- Aquí se insertará la información -->
         </div>
+    </section>
+
+
+
+
+
+    <!-- Consola SQLite -->
+    <section id="consola-sql" class="form-section" style="display:none;">
+        <h2>Consola SQLite</h2>
+        
+        <form id="consola">
+            <input type="text" id="comando">
+
+            <input type="button" id="boton_consola">
+
+
+        </form>
+
     </section>
 
 

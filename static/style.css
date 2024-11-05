@@ -41,6 +41,7 @@ table {
     background-color: white; /* Fondo de la tabla */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra para la tabla */
     border-radius: 5px; /* Bordes redondeados */
+    text-transform: capitalize
 }
 
 th, td {
@@ -64,3 +65,6 @@ tr:hover {
     font-weight: bold; /* Texto en negrita */
     text-decoration: underline; /* Subrayado */
 }
+
+
+
