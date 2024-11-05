@@ -31,8 +31,7 @@ Este es mi primer proyecto "grande", un gestor de bases de datos que permite a l
 2. Accede a la aplicación: Entra en tu navegador a http://localhost:5000 para acceder a la interfaz gráfica.
 
 
-0. Si unicamente quiere usar la interfaz de texto:
-    ```bash
+Si unicamente quiere usar la interfaz de texto:
     python db_manager.py
 
 
