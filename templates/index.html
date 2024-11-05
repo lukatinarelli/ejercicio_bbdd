@@ -62,14 +62,20 @@
     </section>
 
 
-
+    <!-- Eliminar tablas -->
     <section id="eliminar-tabla" class="form-section" style="display:none;">
         <h2>Eliminar Tabla</h2>
-        <form id="form-eliminar-tabla" action="/delete_table" method="post">
-            <label for="delete-table-name">Nombre de la Tabla:</label>
-            <input type="text" id="delete-table-name" name="table_name" required>
-            <button type="submit">Eliminar Tabla</button>
-        </form>
+
+        <label for="table_name">Selecciona la tabla que desea eliminar:</label>
+        <select name="table_name" id="table_name_para_eliminar">
+            <option value="" disabled selected>Seleccione una tabla</option> <!-- Opción en blanco -->
+            {% if tablas %}
+                {% for tabla in tablas %}
+                    <option value="{{ tabla[0] }}">{{ tabla[0] }}</option>
+                {% endfor %}
+            {% endif %}
+        </select>
+        <button>Hola</button>
     </section>
 
 
@@ -160,12 +166,11 @@
     <section id="consola-sql" class="form-section" style="display:none;">
         <h2>Consola SQLite</h2>
         
-        <form id="consola">
-            <input type="text" id="comando">
-
-            <input type="button" id="boton_consola">
-
-
+        <form id="consola" onsubmit="return false;" action="/submit" method="post"> <!-- Esto previene el envío del formulario -->
+            <label for="mensaje">Escribe los comandos:</label><br>
+            <textarea id="comando" rows="4" cols="50"></textarea>
+            <br>
+            <button id="boton_consola" type="submit">Ejecutar</button>
         </form>
 
     </section>

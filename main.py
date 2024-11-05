@@ -76,7 +76,7 @@ def insertar_datos():
     for col in columnas:
         col_name = col[1].capitalize()
         col_type = col[2].capitalize()
-        is_auto_increment = col[2].upper() == 'INTEGER' and col[5] == 1
+        is_auto_increment = col[0] == 0 and (col[2].upper() == 'INTEGER' or col[2].upper() == 'INT') and col[5] == 1
         
         if is_auto_increment:
             insert_html += f'<p>{col_name} (Auto Increment, no necesita valor)</p>'
@@ -104,7 +104,7 @@ def inserta_datos():
     
     for col in columnas:
         col_name = col[1].capitalize()
-        is_auto_increment = col[2].upper() == 'INTEGER' and col[5] == 1
+        is_auto_increment = (col[2].upper() == 'INTEGER' or col[2].upper() == 'INT') and col[5] == 1
         
         if not is_auto_increment:
             data_to_insert[col_name] = request.form[col_name]
@@ -197,6 +197,32 @@ def elimina_datos():
             return jsonify({'status': 'error', 'message': 'Registro no encontrado'}), 404
 
         return jsonify({'status': 'success', 'message': f'Registro {id_registro} eliminado de {nombre_tabla}'})
+    
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+    
+    finally:
+        conn.close()
+
+
+@app.route('/submit', methods=['POST'])
+def submit():
+    data = request.get_json()
+    comando = data.get('comando')  
+    
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        # Puedes usar la columna aquí si necesitas hacer algo específico con ella.
+        resultado = cursor.execute(comando).fetchall()
+        conn.commit()
+        
+        # Verificar si se eliminó algún registro
+        if cursor.rowcount == 0:
+            return jsonify({'status': 'error', 'message': 'Registro no encontrado'}), 404
+
+        return jsonify({'status': 'success', 'message': f'Se ha ejecutado correctamente. Recarga la página para ver los cambios\n {resultado}'})
     
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
