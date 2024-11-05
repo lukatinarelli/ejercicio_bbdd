@@ -40,10 +40,10 @@ Si unicamente quiere usar la interfaz de texto:
 
 
 ## Tecnologías Utilizadas
- -Python: lenguaje base de la aplicación
- -Flask: framework web para el backend
- -SQLAlchemy: ORM para la gestión de la base de datos
- -HTML/CSS/JavaScript: para la interfaz de usuario en el frontend
+ - Python: lenguaje base de la aplicación
+ - Flask: framework web para el backend
+ - SQLAlchemy: ORM para la gestión de la base de datos
+ - HTML/CSS/JavaScript: para la interfaz de usuario en el frontend
 
 
 ## Contribución
