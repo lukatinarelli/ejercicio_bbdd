@@ -18,6 +18,27 @@ def index():
     return render_template('index.html', tablas=tablas)
 
 
+@app.route('/eliminar_tabla', methods=['POST'])
+def eliminar_tablas():
+    data = request.get_json()
+    table_name = data.get('table_name')
+    
+    conn = connect_db()
+    cursor = conn.cursor()
+    
+    try:
+        cursor.execute(f"DROP TABLE IF EXISTS {table_name};")
+        conn.commit()
+        
+    except Exception as e:
+        return f"Error: {str(e)}", 400 
+    
+    finally:
+        conn.close()
+    
+    return redirect(url_for('index'))
+
+
 @app.route('/consultar', methods=['POST'])
 def consultar_datos():
     table_name = request.form['table_name_consultar']  # Obtener el nombre de la tabla del formulario

@@ -36,20 +36,6 @@ function showSection(sectionId) {
     }
 }
 
-/*$(document).ready(function(){
-    $('#table_name__para_eliminar').change(function() {
-        var tableName = $(this).val(); // Obtener el valor seleccionado
-
-        $.ajax({
-            url: '/eliminar_tabla',  // URL a la que se enviarán los datos
-            type: 'POST',  // Método de la solicitud
-            data: { table_name_eliminar: tableName },  // Enviar el nombre de la tabla
-            success: function(response) {
-                $('#eliminar').html(response);  // Insertar la respuesta en el div "resultados"
-            }
-        });
-    });
-});*/
 
 $(document).ready(function(){
     $('#table_name_consultar').change(function() {
@@ -118,28 +104,46 @@ function elimina_datos(id, tabla, columna) {
 }
 
 
+document.getElementById('boton_eliminar_tabla').addEventListener('click', function(event) {
+    event.preventDefault(); 
 
-document.getElementById('consola').addEventListener('submit', function(event) {
-    event.preventDefault(); // Evitar el envío convencional del formulario
+    const table_name = document.getElementById('table_name_para_eliminar').value;
+
+    fetch('/eliminar_tabla', {
+        method: 'POST',
+        headers: {
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify({ table_name: table_name})
+    })
+    .then(response => {
+        if (response.ok) {
+            alert(`La tabla ${table_name} se ha eliminado correctamente`);
+            window.location.href = '/';
+        } else {
+            alert("Error al eliminar la tabla");
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+
+
+document.getElementById('boton_consola').addEventListener('click', function(event) {
+    event.preventDefault();
 
     const comando = document.getElementById('comando').value;
 
-    console.log(comando)
-    // Hacer la solicitud POST a main.py
     fetch('/submit', {
         method: 'POST',
         headers: {
             'Content-Type': "application/json"
         },
-        body: JSON.stringify({ comando: comando})
+        body: JSON.stringify({ comando: comando })
     })
     .then(response => response.json())
     .then(data => {
-        if (data.status === 'success') {
-            alert(data.message);  // Muestra mensaje de éxito
-        } else {
-            alert(data.message);  // Muestra mensaje de error
-        }
+        alert(data.message);
+        window.location.href = '/';
     })
     .catch(error => console.error('Error:', error));
 });
