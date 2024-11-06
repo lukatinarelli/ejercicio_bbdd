@@ -243,7 +243,7 @@ def submit():
         if cursor.rowcount == 0:
             return jsonify({'status': 'error', 'message': 'Registro no encontrado'}), 404
 
-        return jsonify({'status': 'success', 'message': f'Se ha ejecutado correctamente. Recarga la página para ver los cambios\n {resultado}'})
+        return jsonify({'status': 'success', 'message': f'Se ha ejecutado correctamente.\n {resultado}'})
     
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
