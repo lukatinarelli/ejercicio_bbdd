@@ -32,9 +32,8 @@ Este es mi primer proyecto "grande", un gestor de bases de datos que permite a l
 
 
 Si unicamente quiere usar la interfaz de texto:
-```bash
-    python db_manager.py
-```
+    ```bash python db_manager.py```
+
 
 ## Tecnologías Utilizadas
  - Python: lenguaje base de la aplicación
