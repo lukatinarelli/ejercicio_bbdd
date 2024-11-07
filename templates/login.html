@@ -8,10 +8,11 @@
     </head>
     <body>
         <div class="cuadrado"></div>
-        <form id="form" class="form">
+        <form id="form" class="form" action="{{ url_for('login') }}" method="POST">
             <span class="titulo">Iniciar Sesión</span>
             <input type="text" 
-                id="user" 
+                id="user"
+                name="user"
                 required>
             <label id="lbl-user" class="lbl-palabra">
                 <span class="text-pal">
@@ -20,15 +21,20 @@
             </label>
             </br></br>
             <input type="password" 
-                id="contraseña"
+                id="password"
+                name="password"
                 required>
             <label id="lbl-contraseña" class="lbl-palabra">
                 <span class="text-pal">
                     Contraseña
                 </span>
             </label>
-            <input type="submit" class="botón" value="Iniciar Sesión">
+            <button type="submit" id="boton_login">Iniciar Sesión</button>
         </form>
+        
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
         <script src="script.js" type="text/javascript"></script>
     </body>
 </html>

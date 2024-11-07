@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import sqlite3
 
@@ -8,14 +8,36 @@ app.secret_key = "12345" # Clave secreta
 def connect_db():
     return sqlite3.connect('database/database.db')  # Cambia el nombre de tu base de datos
 
-@app.route('/')
+
+@app.route('/', methods=['GET', 'POST'])
 def index():
+    if 'user' not in session:
+        # Si el método es POST, intentamos autenticar
+        if request.method == 'POST':
+            user = request.form['user']
+            password = request.form['password']
+            if user == "admin" and password == "password":
+                session['user'] = user  # Guarda el usuario en la sesión
+                return redirect(url_for('index'))  # Redirige a la raíz '/'
+            else:
+                # Si no se autentica, muestra el error en el login
+                return render_template('login.html', error="Usuario o contraseña incorrectos.")
+        # Si es GET, mostramos el formulario de login
+        return render_template('login.html')
+    
+    # Si el usuario está autenticado, mostramos la vista principal directamente en "/"
     conn = connect_db()
     cursor = conn.cursor()
-    tablas = cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name != 'sqlite_sequence';").fetchall() # Obtener las tablas
+    tablas = cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name != 'sqlite_sequence';").fetchall()  # Obtener las tablas
     conn.close()
     
     return render_template('index.html', tablas=tablas)
+
+# Ruta para cerrar sesión
+@app.route('/logout')
+def logout():
+    session.pop('user', None)  # Elimina al usuario de la sesión
+    return redirect(url_for('index'))
 
 
 @app.route('/eliminar_tabla', methods=['POST'])

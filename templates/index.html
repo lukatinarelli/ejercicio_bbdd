@@ -20,6 +20,7 @@
         <button onclick="showSection('modificar-datos')">Modificar Datos</button>
         <button onclick="showSection('eliminar-datos')">Eliminar Datos</button>
         <button onclick="showSection('consola-sql')">Consola SQL</button>
+        <a href="{{ url_for('logout') }}" class="form-section">Cerrar sesión</a>
     </div>
 
     <!-- Secciones de Formularios, ocultas por defecto -->
@@ -191,7 +192,6 @@
         apellidos TEXT NOT NULL
     );
     -->
-
 
     <script src="/static/script.js"></script>
 </body>

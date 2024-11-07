@@ -127,7 +127,6 @@ document.getElementById('boton_eliminar_tabla').addEventListener('click', functi
     .catch(error => console.error('Error:', error));
 });
 
-
 document.getElementById('boton_consola').addEventListener('click', function(event) {
     event.preventDefault();
 
