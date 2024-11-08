@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccionar Base de Datos</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="selector_db">
+        <div class="cuadra"></div>
+        <h1 class="titulo_db">Seleccionar Base de Datos</h1>
+        <form class="selector" action="{{ url_for('select_db') }}" method="POST">
+            <label for="nombre_bd">Elige una base de datos:</label>
+            <select name="nombre_bd" id="nombre_bd">
+                {% for bd in bases_de_datos %}
+                    <option value="{{ bd }}">{{ bd }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+</body>
+</html>
