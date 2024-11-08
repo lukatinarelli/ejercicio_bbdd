@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify, session
-import sqlite3
+from flask import Flask, render_template, request, redirect, url_for, jsonify, session, send_from_directory
+import sqlite3, os
 
 app = Flask(__name__)
 app.secret_key = 'clave_secreta'  # Configura una clave secreta para la sesión
