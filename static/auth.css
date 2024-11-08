@@ -1,18 +1,21 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
 }
+
 body {
     width: 100%;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #0b1721;
+    background-color: #f4f4f9; 
 }
+
 .form {
     width: 100%;
     height: 50px;
@@ -21,22 +24,25 @@ body {
     overflow-x: clip;
     overflow-y: visible;
 }
+
 .titulo {
     position: absolute;
-    color: #fff;
+    color: #333; 
     top: -50px;
     transform: translateX(50%);
     font-size: 25px;
 }
+
 .form input {
     width: 100%;
     height: 50px;
     background: none;
-    color: #fff;
+    color: #333; 
     padding-top: 20px;
     border: none;
     outline: 0;
 }
+
 .form #lbl-user {
     position: absolute;
     bottom: 0; 
@@ -44,8 +50,9 @@ body {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    border-bottom: 1px solid #c7c7c7;
+    border-bottom: 1px solid #888; 
 }
+
 .form #lbl-contraseña {
     position: relative;
     bottom: 50px; 
@@ -53,8 +60,9 @@ body {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    border-bottom: 1px solid #c7c7c7;
+    border-bottom: 1px solid #888; 
 }
+
 .form .lbl-palabra:after {
     content: '';
     position: absolute;
@@ -62,21 +70,23 @@ body {
     bottom: -1px;
     width: 100%;
     height: 100px;
-    border-bottom: 3px solid #2ecece;
+    border-bottom: 3px solid #333; 
     transform: translateX(-100%);
     transition: all 0.3s ease;
 }
+
 .text-pal {
     position: absolute;
     bottom: 5px;
     left: 0;
     transition: all 0.3s ease;
-    color: #fff;
+    color: #888; 
 }
+
 .form input:focus + .lbl-palabra .text-pal, .form input:valid + .lbl-palabra .text-pal {
     transform: translateY(-150%);
     font-size: 14px;
-    color: #2ecece;
+    color: #333; 
 }
 .form input:focus + .lbl-palabra::after, .form input:valid + .lbl-palabra::after {
     transform: translateX(0%);
@@ -89,28 +99,34 @@ body {
 .form .texto {
     margin-top: 20px;
 }
-#botón_login {
+#boton_login {
     width: 100%;
     height: 40px;
-    background-color: #2ecece;
-    border: none;
-    color: #fff;
+    background-color: #e7e7e7;
+    border: 1px solid #ccc;
+    color: #333;
     cursor: pointer;
     border-radius: 10px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
     padding: 10px;
     transform: translateY(-50%);
 }
-#botón_login:hover {
-    background-color: #25b2b2;
+
+#boton_login:hover {
+    background-color: #d1d1d1; 
 }
+
 .cuadrado {
     width: 350px;
     height: 300px;
-    background: #132636;
+    background: #ffffff; 
     position: absolute;
-    justify-content: center;
     transform: translate(0%, 15%);
     border-radius: 25px;
-    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+}
+
+.mensaje_error {
+    position: absolute;
+    transform: translateY(1000%);
 }

@@ -1,9 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import sqlite3
 
 app = Flask(__name__)
-app.secret_key = "12345" # Clave secreta
+app.secret_key = 'clave_secreta'  # Configura una clave secreta para la sesión
 
 def connect_db():
     return sqlite3.connect('database/database.db')  # Cambia el nombre de tu base de datos
@@ -33,11 +32,12 @@ def index():
     
     return render_template('index.html', tablas=tablas)
 
-# Ruta para cerrar sesión
-@app.route('/logout')
+
+# Ruta para cerrar sesión, ahora acepta el método POST
+@app.route('/logout', methods=['POST'])
 def logout():
     session.pop('user', None)  # Elimina al usuario de la sesión
-    return redirect(url_for('index'))
+    return redirect(url_for('index'))  # Redirige al inicio de sesión
 
 
 @app.route('/eliminar_tabla', methods=['POST'])

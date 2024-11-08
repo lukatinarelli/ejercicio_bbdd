@@ -8,7 +8,7 @@
     </head>
     <body>
         <div class="cuadrado"></div>
-        <form id="form" class="form" action="{{ url_for('login') }}" method="POST">
+        <form id="form" class="form" action="{{ url_for('index') }}" method="POST">
             <span class="titulo">Iniciar Sesión</span>
             <input type="text" 
                 id="user"
@@ -32,9 +32,12 @@
             <button type="submit" id="boton_login">Iniciar Sesión</button>
         </form>
         
-        {% if error %}
-            <p style="color: red;">{{ error }}</p>
-        {% endif %}
+        <div class="mensaje_error">
+            {% if error %}
+                <p style="color: red;">{{ error }}</p>
+            {% endif %}
+        </div>
+
         <script src="script.js" type="text/javascript"></script>
     </body>
 </html>
