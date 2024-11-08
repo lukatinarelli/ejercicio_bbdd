@@ -7,8 +7,13 @@ body {
     margin: 0;
 }
 
-h1 {
+.titulo {
     color: #333;
+    font-size: 2em;
+    font-weight: bold;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+    text-decoration: none;
 }
 
 form {
@@ -65,6 +70,3 @@ tr:hover {
     font-weight: bold; /* Texto en negrita */
     text-decoration: underline; /* Subrayado */
 }
-
-
-
