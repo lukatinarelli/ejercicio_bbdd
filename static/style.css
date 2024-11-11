@@ -23,7 +23,7 @@ body {
 
 .cuadra {
     width: 500px;
-    height: 100px;
+    height: 200px;
     background: #ffffff; 
     position: absolute;
     border-radius: 25px;
@@ -36,7 +36,7 @@ body {
     font-size: 2em;
     font-weight: bold;
     margin-top: 2em;
-    margin-bottom: 0.67em;
+    margin-bottom: 1.5em;
     text-decoration: none;
     transform: translate(10%, -75%);
 }
