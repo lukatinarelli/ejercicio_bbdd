@@ -11,11 +11,13 @@
         <div class="cuadra"></div>
         <h1 class="titulo_db">Seleccionar Base de Datos</h1>
         <form class="selector" action="{{ url_for('select_db') }}" method="POST">
-            <label for="nombre_bd">Elige una base de datos:</label>
+            <label for="nombre_bd">Elegir Base de Datos:</label>
             <select name="nombre_bd" id="nombre_bd">
-                {% for bd in bases_de_datos %}
-                    <option value="{{ bd }}">{{ bd }}</option>
-                {% endfor %}
+                {% if bbdd %}
+                    {% for bd in bbdd %}
+                        <option value="{{ bd }}">{{ bd }}</option>
+                    {% endfor %}
+                {% endif %}
             </select>
             <button type="submit">Entrar</button>
         </form>

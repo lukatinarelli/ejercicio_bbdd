@@ -1,11 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session, send_from_directory
-import sqlite3, os
+from os import listdir, getcwd
+import sqlite3
 
 app = Flask(__name__)
 app.secret_key = 'clave_secreta'  # Configura una clave secreta para la sesión
-
-def connect_db():
-    return sqlite3.connect('database/database.db')  # Cambia el nombre de tu base de datos
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -17,20 +15,28 @@ def index():
             password = request.form['password']
             if user == "admin" and password == "password":
                 session['user'] = user  # Guarda el usuario en la sesión
-                return redirect(url_for('index'))  # Redirige a la raíz '/'
+                
+                bbdd = listdir(getcwd() + '/databases')                
+                return render_template('select_db.html', bbdd=bbdd)  # Redirige a la raíz '/'
             else:
                 # Si no se autentica, muestra el error en el login
                 return render_template('login.html', error="Usuario o contraseña incorrectos.")
         # Si es GET, mostramos el formulario de login
         return render_template('login.html')
-    
-    # Si el usuario está autenticado, mostramos la vista principal directamente en "/"
-    conn = connect_db()
-    cursor = conn.cursor()
-    tablas = cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name != 'sqlite_sequence';").fetchall()  # Obtener las tablas
-    conn.close()
-    
-    return render_template('index.html', tablas=tablas)
+
+    bbdd = session.get('bbdd')
+
+    if bbdd:
+        conn = connect_db()
+        cursor = conn.cursor()
+        tablas = cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name != 'sqlite_sequence';").fetchall()  # Obtener las tablas
+        conn.close()
+        
+        return render_template('index.html', tablas=tablas)   # bbdd=bbdd
+
+    else:
+        bbdd = listdir(getcwd() + '/databases')                
+        return render_template('select_db.html', bbdd=bbdd)  # Redirige a la raíz '/'
 
 
 # Ruta para cerrar sesión, ahora acepta el método POST
@@ -38,6 +44,24 @@ def index():
 def logout():
     session.pop('user', None)  # Elimina al usuario de la sesión
     return redirect(url_for('index'))  # Redirige al inicio de sesión
+
+
+@app.route('/select_db', methods=['POST'])
+def select_db():
+    bbdd = request.form['nombre_bd']
+    session['bbdd'] = bbdd
+
+    return redirect(url_for('index'))
+
+
+def connect_db():
+    bbdd = session.get('bbdd')
+    if bbdd:
+        # Conectar a la base de datos seleccionada en la sesión
+        return sqlite3.connect(f'databases/{bbdd}')
+    else:
+        # Si no hay base de datos seleccionada, lanza un error o retorna None
+        raise ValueError("No se ha seleccionado ninguna base de datos.")
 
 
 @app.route('/eliminar_tabla', methods=['POST'])
