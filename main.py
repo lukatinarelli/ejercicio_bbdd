@@ -32,7 +32,7 @@ def index():
         tablas = cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name != 'sqlite_sequence';").fetchall()  # Obtener las tablas
         conn.close()
         
-        return render_template('index.html', tablas=tablas)   # bbdd=bbdd
+        return render_template('index.html', tablas=tablas)
 
     else:
         bbdd = listdir(getcwd() + '/databases')                
@@ -49,9 +49,19 @@ def logout():
 @app.route('/select_db', methods=['POST'])
 def select_db():
     bbdd = request.form['nombre_bd']
+
+    # if bbdd == "nueva_db":
+        # return redirect(url_for('crear_bbdd'))
+
+    # else:
     session['bbdd'] = bbdd
 
     return redirect(url_for('index'))
+    
+
+#@app.route('/crear_bbdd', methods=['POST'])
+#ef crear_bbdd():
+    # Crear nueva database
 
 
 def connect_db():
