@@ -37,6 +37,24 @@ function showSection(sectionId) {
 }
 
 
+html_colums = ''
+document.getElementById('boton_crear_columna').addEventListener('click', function(event) {
+    event.preventDefault(); 
+
+    console.log(html_colums)
+
+    $.ajax({
+        url: '/create_colum',
+        type: 'POST',
+        data: { html_colums: html_colums },
+        success: function(response) {
+            html_colums += '<tr><td> <input type="text" size="15"></td> <td><input type="text" size="10"></td> <td WIDTH="50"><input type="checkbox"></td> <td><input type="checkbox"></td> <td><input type="submit" value="Eliminar columna"></td></tr>'
+            $('#columnas_tabla').html(response);
+        }
+    })
+});
+
+
 $(document).ready(function(){
     $('#table_name_consultar').change(function() {
         var tableName = $(this).val(); // Obtener el valor seleccionado

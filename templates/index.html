@@ -35,9 +35,25 @@
         <form id="form-crear-tabla" action="/create_table" method="post">
             <label for="table-name">Nombre de la Tabla:</label>
             <input type="text" id="table-name" name="table_name" required>
-            <label for="columns">Definir Columnas (ej. nombre TEXT):</label>
-            <input type="text" id="columns" name="columns" required>
-            <button type="submit">Crear Tabla</button>
+            </br>
+            <form id="añadir_columna">
+                <label for="columns">Columnas:</label>
+                </br>
+                <table>
+                    <tr>
+                        <td WIDTH="200"><label style="height: 50px;">Nombre columna</label></td>
+                        <td WIDTH="75"><label>Tipo</label></td>
+                        <td><label>NOT NULL</label></td>
+                        <td><label title="Solo una columna">Primary Key</label></td>
+                    </tr>
+                </table>
+                <table>
+                    <div id="columnas_tabla">
+                        <!-- Aquí se mostrará la información -->
+                    </div>
+                </table>
+                <button type="submit" id="boton_crear_columna">Añadir columna</button>
+            </form>
         </form>
     </section>
 

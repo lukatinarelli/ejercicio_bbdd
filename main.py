@@ -72,6 +72,15 @@ def connect_db():
     else:
         # Si no hay base de datos seleccionada, lanza un error o retorna None
         raise ValueError("No se ha seleccionado ninguna base de datos.")
+    
+
+@app.route('/create_colum', methods=['POST'])
+def create_colum():
+    html = request.form['html_colums']
+    
+    html += '<tr><td> <input type="text" size="15"></td> <td><input type="text" size="10"></td> <td WIDTH="50"><input type="checkbox"></td> <td><input type="checkbox"></td> <td><input type="submit" value="Eliminar columna"></td></tr>'
+
+    return html
 
 
 @app.route('/eliminar_tabla', methods=['POST'])
