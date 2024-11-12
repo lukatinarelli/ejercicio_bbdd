@@ -41,15 +41,35 @@ html_colums = ''
 document.getElementById('boton_crear_columna').addEventListener('click', function(event) {
     event.preventDefault(); 
 
-    console.log(html_colums)
-
     $.ajax({
         url: '/create_colum',
         type: 'POST',
         data: { html_colums: html_colums },
         success: function(response) {
-            html_colums += '<tr><td> <input type="text" size="15"></td> <td><input type="text" size="10"></td> <td WIDTH="50"><input type="checkbox"></td> <td><input type="checkbox"></td> <td><input type="submit" value="Eliminar columna"></td></tr>'
-            $('#columnas_tabla').html(response);
+            if (html_colums == '') {
+                html_colums += '<tr><td> <input type="text" size="15"></td> <td><input type="text" size="10"></td> <td WIDTH="50"><input type="checkbox"></td> <td><input type="checkbox"></td> <td><input type="submit" id="boton_eliminar_columna" value="Eliminar columna"></td></tr>'
+            } else {
+                html_colums += '<tr><td> <input type="text" size="15"></td> <td><input type="text" size="10"></td> <td WIDTH="50"><input type="checkbox"></td> <td></td> <td><input type="submit" id="boton_eliminar_columna" value="Eliminar columna"></td></tr>'
+            }
+        $('#columnas_tabla').html(response);
+        }
+    })
+});
+
+document.getElementById('boton_eliminar_columna').addEventListener('click', function(event) {
+    event.preventDefault(); 
+
+    $.ajax({
+        url: '/eliminar_colum',
+        type: 'POST',
+        data: { html_colums: html_colums },
+        success: function(response) {
+            if (html_colums == '') {
+                html_colums -= '<tr><td> <input type="text" size="15"></td> <td><input type="text" size="10"></td> <td WIDTH="50"><input type="checkbox"></td> <td><input type="checkbox"></td> <td><input type="submit" id="boton_eliminar_columna" value="Eliminar columna"></td></tr>'
+            } else {
+                html_colums -= '<tr><td> <input type="text" size="15"></td> <td><input type="text" size="10"></td> <td WIDTH="50"><input type="checkbox"></td> <td></td> <td><input type="submit" id="boton_eliminar_columna" value="Eliminar columna"></td></tr>'
+            }
+        $('#columnas_tabla').html(response);
         }
     })
 });

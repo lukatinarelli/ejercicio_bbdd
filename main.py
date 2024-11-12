@@ -78,7 +78,21 @@ def connect_db():
 def create_colum():
     html = request.form['html_colums']
     
-    html += '<tr><td> <input type="text" size="15"></td> <td><input type="text" size="10"></td> <td WIDTH="50"><input type="checkbox"></td> <td><input type="checkbox"></td> <td><input type="submit" value="Eliminar columna"></td></tr>'
+    if html == '':
+        html += '<tr><td> <input type="text" size="15"></td> <td><input type="text" size="10"></td> <td WIDTH="50"><input type="checkbox"></td> <td><input type="checkbox"></td> <td><input type="submit" id="boton_eliminar_columna" value="Eliminar columna"></td></tr>'
+    else:
+        html += '<tr><td> <input type="text" size="15"></td> <td><input type="text" size="10"></td> <td WIDTH="50"><input type="checkbox"></td> <td></td> <td><input type="submit" id="boton_eliminar_columna" value="Eliminar columna"></td></tr>'
+
+    return html
+
+@app.route('/eliminar_colum', methods=['POST'])
+def eliminar_colum():
+    html = request.form['html_colums']
+    
+    if html == '':
+        html -= '<tr><td> <input type="text" size="15"></td> <td><input type="text" size="10"></td> <td WIDTH="50"><input type="checkbox"></td> <td><input type="checkbox"></td> <td><input type="submit" id="boton_eliminar_columna" value="Eliminar columna"></td></tr>'
+    else:
+        html -= '<tr><td> <input type="text" size="15"></td> <td><input type="text" size="10"></td> <td WIDTH="50"><input type="checkbox"></td> <td></td> <td><input type="submit" id="boton_eliminar_columna" value="Eliminar columna"></td></tr>'
 
     return html
 
