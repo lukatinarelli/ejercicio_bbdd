@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Eliminar Base de Datos</title>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+        <div class="selector_db">
+            <div class="cuadra"></div>
+            <h1 class="titulo_db">Eliminar Base de Datos</h1>
+            <form class="selector" action="{{ url_for('eliminar_db') }}" method="POST">
+                <label>Elegir Base de Datos:</label>
+                <select name="eliminar_ddb" id="eliminar_ddb">
+                    <option value="" disabled selected>Seleccione una base de datos</option>
+                    {% if bbdd %}
+                        {% for bd in bbdd %}
+                            <option value="{{ bd }}">{{ bd }}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+                <button type="submit">Eliminar</button>
+            </form>
+        </div>
+        
+        <script src="/static/script.js"></script>
+    </body>
+</html>

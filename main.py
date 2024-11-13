@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session, send_from_directory
 from os import listdir, getcwd
-import sqlite3
+import sqlite3, os
 
 app = Flask(__name__)
 app.secret_key = 'clave_secreta'  # Configura una clave secreta para la sesión
@@ -52,6 +52,9 @@ def select_db():
 
     if bbdd == "nueva_db":
         return render_template('bbdd/crear_bbdd.html')
+    
+    elif bbdd == "borrar_db":
+        return render_template('bbdd/eliminar_bbdd.html')
 
     else:
         session['bbdd'] = bbdd
@@ -67,6 +70,14 @@ def crear_bbdd():
 
     return redirect(url_for('index'))
 
+
+@app.route('/eliminar_db', methods=['POST'])
+def eliminar_db():
+    bbdd = request.form['eliminar_ddb']
+
+    os.remove(getcwd() + '/databases' + bbdd)
+
+    return redirect(url_for('index'))
 
 
 def connect_db():
