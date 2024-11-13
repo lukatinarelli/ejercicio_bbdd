@@ -1,28 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seleccionar Base de Datos</title>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-    <div class="selector_db">
-        <div class="cuadra"></div>
-        <h1 class="titulo_db">Seleccionar Base de Datos</h1>
-        <form class="selector" action="{{ url_for('select_db') }}" method="POST">
-            <label for="nombre_bd">Elegir Base de Datos:</label>
-            <select name="nombre_bd" id="nombre_bd">
-                {% if bbdd %}
-                    {% for bd in bbdd %}
-                        <option value="{{ bd }}">{{ bd }}</option>
-                    {% endfor %}
-                    <option value="nueva_db">Crear nueva base de datos</option>
-                {% endif %}
-            </select>
-            <button type="submit">Entrar</button>
-        </form>
-    </div>
-</body>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Seleccionar Base de Datos</title>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+        <div class="selector_db">
+            <div class="cuadra"></div>
+            <h1 class="titulo_db">Seleccionar Base de Datos</h1>
+            <form class="selector" action="{{ url_for('select_db') }}" method="POST">
+                <label for="nombre_bd">Elegir Base de Datos:</label>
+                <select name="nombre_bd" id="nombre_bd">
+                    <option value="" disabled selected>Seleccione una base de datos</option>
+                    {% if bbdd %}
+                        {% for bd in bbdd %}
+                            <option value="{{ bd }}">{{ bd }}</option>
+                        {% endfor %}
+                        <option value="nueva_db">Crear nueva base de datos</option>
+                    {% endif %}
+                </select>
+                <button type="submit">Entrar</button>
+            </form>
+        </div>
+        
+        <script src="/static/script.js"></script>
+    </body>
 </html>

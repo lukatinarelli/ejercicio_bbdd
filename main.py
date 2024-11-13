@@ -50,18 +50,23 @@ def logout():
 def select_db():
     bbdd = request.form['nombre_bd']
 
-    # if bbdd == "nueva_db":
-        # return redirect(url_for('crear_bbdd'))
+    if bbdd == "nueva_db":
+        return render_template('bbdd/crear_bbdd.html')
 
-    # else:
-    session['bbdd'] = bbdd
+    else:
+        session['bbdd'] = bbdd
 
-    return redirect(url_for('index'))
+        return redirect(url_for('index'))
     
 
-#@app.route('/crear_bbdd', methods=['POST'])
-#ef crear_bbdd():
-    # Crear nueva database
+@app.route('/crear_bbdd', methods=['POST'])
+def crear_bbdd():
+    bbdd = request.form['nombre_bd_crear']
+
+    session['bbdd'] = f"{bbdd}.db"
+
+    return redirect(url_for('index'))
+
 
 
 def connect_db():
