@@ -54,7 +54,8 @@ def select_db():
         return render_template('bbdd/crear_bbdd.html')
     
     elif bbdd == "borrar_db":
-        return render_template('bbdd/eliminar_bbdd.html')
+        bbdd = listdir(getcwd() + '/databases') 
+        return render_template('bbdd/eliminar_bbdd.html', bbdd=bbdd)
 
     else:
         session['bbdd'] = bbdd
@@ -75,9 +76,9 @@ def crear_bbdd():
 def eliminar_db():
     bbdd = request.form['eliminar_ddb']
 
-    os.remove(getcwd() + '/databases' + bbdd)
+    os.remove(getcwd() + '/databases/' + bbdd)
 
-    return redirect(url_for('index'))
+    return redirect(url_for('select_db'))
 
 
 def connect_db():
