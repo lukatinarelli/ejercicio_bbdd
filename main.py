@@ -78,7 +78,7 @@ def eliminar_db():
 
     os.remove(getcwd() + '/databases/' + bbdd)
 
-    return redirect(url_for('select_db'))
+    return redirect(url_for('select_db'))  # problema ------------------------------------------------
 
 
 def connect_db():
