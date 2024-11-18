@@ -34,7 +34,7 @@
         <h2>Crear Tabla</h2>
         <form id="form-crear-tabla" action="/create_table" method="post">
             <label for="table-name">Nombre de la Tabla:</label>
-            <input type="text" id="table-name" name="table_name" required>
+            <input type="text" id="table-name" name="table_name">
             </br>
             <form id="añadir_columna">
                 <label for="columns">Columnas:</label>
@@ -54,6 +54,7 @@
                 </table>
                 <button type="submit" id="boton_crear_columna">Añadir columna</button>
             </form>
+            <button type="submit" id="boton_crear_tabla">Crear tabla</button>
         </form>
     </section>
 

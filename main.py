@@ -17,7 +17,7 @@ def index():
                 session['user'] = user  # Guarda el usuario en la sesión
                 
                 bbdd = listdir(getcwd() + '/databases')                
-                return render_template('select_db.html', bbdd=bbdd)  # Redirige a la raíz '/'
+                return render_template('bbdd/select_db.html', bbdd=bbdd)  # Redirige a la raíz '/'
             else:
                 # Si no se autentica, muestra el error en el login
                 return render_template('login.html', error="Usuario o contraseña incorrectos.")
@@ -36,7 +36,7 @@ def index():
 
     else:
         bbdd = listdir(getcwd() + '/databases')                
-        return render_template('select_db.html', bbdd=bbdd)  # Redirige a la raíz '/'
+        return render_template('bbdd/select_db.html', bbdd=bbdd)  # Redirige a la raíz '/'
 
 
 # Ruta para cerrar sesión, ahora acepta el método POST
@@ -78,7 +78,8 @@ def eliminar_db():
 
     os.remove(getcwd() + '/databases/' + bbdd)
 
-    return redirect(url_for('select_db'))  # problema ------------------------------------------------
+    session.pop('user', None)  # Elimina al usuario de la sesión
+    return redirect(url_for('index'))  # Redirige al inicio de sesión  # problema ------------------------------------------------
 
 
 def connect_db():

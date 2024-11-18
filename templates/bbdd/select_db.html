@@ -13,7 +13,7 @@
             <h1 class="titulo_db">Seleccionar Base de Datos</h1>
             <form class="selector" action="{{ url_for('select_db') }}" method="POST">
                 <label for="nombre_bd">Elegir Base de Datos:</label>
-                <select name="nombre_bd" id="nombre_bd">
+                <select name="nombre_bd" id="nombre_bd" required>
                     <option value="" disabled selected>Seleccione una base de datos</option>
                     {% if bbdd %}
                         {% for bd in bbdd %}
