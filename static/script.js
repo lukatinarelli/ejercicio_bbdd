@@ -56,7 +56,7 @@ document.getElementById('boton_crear_columna').addEventListener('click', functio
     })
 });
 
-document.getElementById('boton_eliminar_columna').addEventListener('click', function(event) {
+/*document.getElementById('boton_eliminar_columna').addEventListener('click', function(event) {
     event.preventDefault(); 
 
     $.ajax({
@@ -72,7 +72,7 @@ document.getElementById('boton_eliminar_columna').addEventListener('click', func
         $('#columnas_tabla').html(response);
         }
     })
-});
+});*/
 
 
 $(document).ready(function(){
