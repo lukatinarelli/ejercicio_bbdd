@@ -61,7 +61,6 @@ document.getElementById('boton_crear_columna').addEventListener('click', functio
                 <option value="TEXT">TEXT</option>
                 <option value="INTEGER">INTEGER</option>
                 <option value="REAL">REAL</option>
-                <option value="BLOB">BLOB</option>
             </select>
         </td>
         <td><input type="checkbox" name="not_nulls[]"></td>

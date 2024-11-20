@@ -198,7 +198,7 @@ def consultar_datos():
                 # Añadir clase "primary-key" para aplicar estilo especial
                 tabla_html += f'<th title="Clave primaria" class="primary-key">{col_name.upper()}</th>'
             else:
-                tabla_html += f'<th style="">{col_name}<br>Tipo: {col_type}</th>' #aqyuuuuuuuuuu
+                tabla_html += f'<th style="width: 250px;">{col_name}<br>Tipo: {col_type}</th>'
         
         tabla_html += '</tr></thead><tbody>'
         
@@ -208,7 +208,7 @@ def consultar_datos():
             for valor in fila:
                 tabla_html += f'<td>{valor}</td>'
             tabla_html += '</tr>'
-        tabla_html += '</tbody></table>'
+        tabla_html += '</tbody></table></div>'
     else:
         tabla_html += '<p>No hay datos en esta tabla.</p>'
 
@@ -230,19 +230,51 @@ def insertar_datos():
     for col in columnas:
         col_name = col[1].capitalize()
         col_type = col[2].capitalize()
+        not_null = col[3]  # Si es NOT NULL (1 = Sí, 0 = No)
         is_auto_increment = col[0] == 0 and (col[2].upper() == 'INTEGER' or col[2].upper() == 'INT') and col[5] == 1
         
         if is_auto_increment:
-            insert_html += f'<p>{col_name} (Auto Increment, no necesita valor)</p></br>'
+            insert_html += f'<p style="background-color: yellow; display: inline-block; font-size:18px;">{col_name.upper()} (Auto Increment, no necesita valor)</p></br>'
         else:
-            if col_type == 'Text':
-                insert_html += f'<p>{col_name} (Texto):</p>'
-                insert_html += f'<input type="text" name="{col_name}" required><br>'
+            if not_null == 1:         
+                if col_type == 'Text':
+                    insert_html += f'<p>{col_name} (Texto):</p>'
+                    insert_html += f'<input type="text" name="{col_name}" required><br>'
 
-            elif col_type == 'Integer':
-                insert_html += f'<p>{col_name} (Número entero):</p>'
-                insert_html += f'<input type="number" name="{col_name}" title="Solo se aceptan números enteros" pattern="^[0-9]+$" required><br>'
+                elif col_type == 'Integer':
+                    insert_html += f'<p>{col_name} (Número entero):</p>'
+                    insert_html += f'<input type="number" name="{col_name}" title="Solo se aceptan números enteros" step="1" required><br>'
 
+                elif col_type == 'Real':
+                    insert_html += f'<p>{col_name} (Número entero):</p>'
+                    insert_html += f'<input type="number" name="{col_name}" title="Solo se aceptan números" step="any" required><br>'
+            
+            elif not_null == 0:
+                if col[5] == 1:
+                    if col_type == 'Text':
+                        insert_html += f'<p style="background-color: yellow; display: inline-block; font-size:18px;">{col_name} (Texto y Clave primaria):</p></br>'
+                        insert_html += f'<input type="text" name="{col_name}" required><br>'
+
+                    elif col_type == 'Integer':
+                        insert_html += f'<p style="background-color: yellow; display: inline-block; font-size:18px;">{col_name} (Número entero y Clave primaria):</p></br>'
+                        insert_html += f'<input type="number" name="{col_name}" title="Solo se aceptan números enteros" step="1" required><br>'
+
+                    elif col_type == 'Real':
+                        insert_html += f'<p style="background-color: yellow; display: inline-block; font-size:18px;">{col_name} (Número entero y Clave primaria):</p></br>'
+                        insert_html += f'<input type="number" name="{col_name}" title="Solo se aceptan números" step="any" required><br>'
+
+                elif col[5] == 0:
+                    if col_type == 'Text':
+                        insert_html += f'<p>{col_name} (Texto):</p>'
+                        insert_html += f'<input type="text" name="{col_name}"><br>'
+
+                    elif col_type == 'Integer':
+                        insert_html += f'<p>{col_name} (Número entero):</p>'
+                        insert_html += f'<input type="number" name="{col_name}" title="Solo se aceptan números enteros" step="1"><br>'
+
+                    elif col_type == 'Real':
+                        insert_html += f'<p>{col_name} (Número entero):</p>'
+                        insert_html += f'<input type="number" name="{col_name}" title="Solo se aceptan números" step="any"><br>'
                 
     insert_html += '</br> <input id="inserta_dato" type="submit" value="Insertar Datos" /> </form>'
   
