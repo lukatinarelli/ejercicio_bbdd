@@ -34,29 +34,31 @@
         <h2>Crear Tabla</h2>
         <form id="form-crear-tabla" action="/create_table" method="post">
             <label for="table-name">Nombre de la Tabla:</label>
-            <input type="text" id="table-name" name="table_name">
-            </br>
-            <form id="añadir_columna">
-                <label for="columns">Columnas:</label>
-                </br>
-                <table>
+            <input type="text" id="table-name" name="table_name" required>
+            <br><br>
+    
+            <label>Columnas:</label>
+            <table id="columnas_tabla">
+                <thead>
                     <tr>
-                        <td WIDTH="175"><label style="height: 50px;">Nombre columna</label></td>
-                        <td WIDTH="100"><label>Tipo (TEXT/INTEGER)</label></td>
-                        <td><label>NOT NULL</label></td>
-                        <td><label title="Solo una columna">Primary Key</label></td>
+                        <th>Nombre columna</th>
+                        <th>Tipo (TEXT/INTEGER)</th>
+                        <th>NOT NULL</th>
+                        <th>Primary Key</th>
+                        <th>Acción</th>
                     </tr>
-                </table>
-                <table>
-                    <div id="columnas_tabla">
-                        <!-- Aquí se mostrará la información -->
-                    </div>
-                </table>
-                <button type="submit" id="boton_crear_columna">Añadir columna</button>
-            </form>
+                </thead>
+                <tbody>
+                    <!-- Filas dinámicas aquí -->
+                </tbody>
+            </table>
+            <br>
+            <button type="button" id="boton_crear_columna">Añadir columna</button>            
+            <br><br>
             <button type="submit" id="boton_crear_tabla">Crear tabla</button>
         </form>
     </section>
+    
 
 
 
@@ -73,7 +75,7 @@
                 {% if tablas %}
                     {% for tabla in tablas %}
                         <tr>
-                            <td>{{ tabla[0] }}</td>
+                            <td style="text-transform: capitalize;">{{ tabla[0] }}</td>
                         </tr>
                     {% endfor %}
                 {% else %}

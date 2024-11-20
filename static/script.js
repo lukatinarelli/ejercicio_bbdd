@@ -37,42 +37,45 @@ function showSection(sectionId) {
 }
 
 
-html_colums = ''
-document.getElementById('boton_crear_columna').addEventListener('click', function(event) {
-    event.preventDefault(); 
+// Manejar añadir columnas
+document.getElementById('boton_crear_columna').addEventListener('click', function () {
+    const tableBody = document.querySelector('#columnas_tabla tbody');
+    const numColumns = tableBody.children.length;
 
-    $.ajax({
-        url: '/create_colum',
-        type: 'POST',
-        data: { html_colums: html_colums },
-        success: function(response) {
-            if (html_colums == '') {
-                html_colums += '<tr><td> <input type="text" size="15"></td> <td><input type="text" size="10"></td> <td WIDTH="50"><input type="checkbox"></td> <td><input type="checkbox"></td> <td><input type="submit" id="boton_eliminar_columna" value="Eliminar columna"></td></tr>'
-            } else {
-                html_colums += '<tr><td> <input type="text" size="15"></td> <td><input type="text" size="10"></td> <td WIDTH="50"><input type="checkbox"></td> <td></td> <td><input type="submit" id="boton_eliminar_columna" value="Eliminar columna"></td></tr>'
-            }
-        $('#columnas_tabla').html(response);
-        }
-    })
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+        <td><input type="text" name="column_names[]" placeholder="Nombre columna" required></td>
+        <td>
+            <select name="column_types[]" required>
+                <option value="TEXT">TEXT</option>
+                <option value="INTEGER">INTEGER</option>
+                <option value="REAL">REAL</option>
+                <option value="BLOB">BLOB</option>
+            </select>
+        </td>
+        <td><input type="checkbox" name="not_nulls[]"></td>
+        <td>
+            <input type="checkbox" name="primary_keys[]" class="primary-key" ${numColumns === 0 ? '' : 'disabled'}>
+        </td>
+        <td><button type="button" class="eliminar_columna">Eliminar</button></td>
+    `;
+    tableBody.appendChild(newRow);
 });
 
-/*document.getElementById('boton_eliminar_columna').addEventListener('click', function(event) {
-    event.preventDefault(); 
+// Manejar eliminar columnas y habilitar Primary Key en la primera fila
+document.getElementById('columnas_tabla').addEventListener('click', function (event) {
+    if (event.target.classList.contains('eliminar_columna')) {
+        const row = event.target.closest('tr');
+        row.remove();
 
-    $.ajax({
-        url: '/eliminar_colum',
-        type: 'POST',
-        data: { html_colums: html_colums },
-        success: function(response) {
-            if (html_colums == '') {
-                html_colums -= '<tr><td> <input type="text" size="15"></td> <td><input type="text" size="10"></td> <td WIDTH="50"><input type="checkbox"></td> <td><input type="checkbox"></td> <td><input type="submit" id="boton_eliminar_columna" value="Eliminar columna"></td></tr>'
-            } else {
-                html_colums -= '<tr><td> <input type="text" size="15"></td> <td><input type="text" size="10"></td> <td WIDTH="50"><input type="checkbox"></td> <td></td> <td><input type="submit" id="boton_eliminar_columna" value="Eliminar columna"></td></tr>'
-            }
-        $('#columnas_tabla').html(response);
-        }
-    })
-});*/
+        // Asegurarnos de habilitar la casilla de Primary Key en la primera fila después de eliminar
+        const rows = document.querySelectorAll('#columnas_tabla tbody tr');
+        rows.forEach((row, index) => {
+            const pkCheckbox = row.querySelector('.primary-key');
+            pkCheckbox.disabled = index !== 0; // Solo habilitar en la primera fila
+        });
+    }
+});
 
 
 $(document).ready(function(){

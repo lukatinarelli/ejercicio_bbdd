@@ -92,27 +92,52 @@ def connect_db():
         raise ValueError("No se ha seleccionado ninguna base de datos.")
     
 
-@app.route('/create_colum', methods=['POST'])
-def create_colum():
-    html = request.form['html_colums']
-    
-    if html == '':
-        html += '<tr><td> <input type="text" size="15"></td> <td><input type="text" size="10"></td> <td WIDTH="50"><input type="checkbox"></td> <td><input type="checkbox"></td> <td><input type="submit" id="boton_eliminar_columna" value="Eliminar columna"></td></tr>'
-    else:
-        html += '<tr><td> <input type="text" size="15"></td> <td><input type="text" size="10"></td> <td WIDTH="50"><input type="checkbox"></td> <td></td> <td><input type="submit" id="boton_eliminar_columna" value="Eliminar columna"></td></tr>'
+@app.route('/create_table', methods=['POST'])
+def create_table():
+    table_name = request.form['table_name']
+    column_names = request.form.getlist('column_names[]')
+    column_types = request.form.getlist('column_types[]')
+    not_nulls = request.form.getlist('not_nulls[]')
+    primary_keys = request.form.getlist('primary_keys[]')
 
-    return html
+    # Asegurarse de que todas las listas tengan el mismo tamaño
+    # Rellenar `primary_keys` y `not_nulls` con valores predeterminados
+    not_nulls = ['off' if i >= len(not_nulls) else not_nulls[i] for i in range(len(column_names))]
+    primary_keys = ['off' if i >= len(primary_keys) else primary_keys[i] for i in range(len(column_names))]
 
-@app.route('/eliminar_colum', methods=['POST'])
-def eliminar_colum():
-    html = request.form['html_colums']
-    
-    if html == '':
-        html -= '<tr><td> <input type="text" size="15"></td> <td><input type="text" size="10"></td> <td WIDTH="50"><input type="checkbox"></td> <td><input type="checkbox"></td> <td><input type="submit" id="boton_eliminar_columna" value="Eliminar columna"></td></tr>'
-    else:
-        html -= '<tr><td> <input type="text" size="15"></td> <td><input type="text" size="10"></td> <td WIDTH="50"><input type="checkbox"></td> <td></td> <td><input type="submit" id="boton_eliminar_columna" value="Eliminar columna"></td></tr>'
+    if not table_name or not column_names:
+        return "El nombre de la tabla y las columnas son obligatorios.", 400
 
-    return html
+    columns_sql = []
+    primary_key_set = False
+
+    for i in range(len(column_names)):
+        column_definition = f"{column_names[i]} {column_types[i]}"
+
+        if primary_keys[i] == 'on':
+            if primary_key_set:
+                return "Solo una columna puede ser la Primary Key.", 400
+            primary_key_set = True
+            column_definition += " PRIMARY KEY"
+            if column_types[i] == "INTEGER":  # Agregar AUTOINCREMENT si es PRIMARY KEY e INTEGER
+                column_definition += " AUTOINCREMENT"
+
+        if not_nulls[i] == 'on':
+            column_definition += " NOT NULL"
+
+        columns_sql.append(column_definition)
+
+    create_table_sql = f"CREATE TABLE {table_name} ({', '.join(columns_sql)});"
+
+    try:
+        conn = connect_db()
+        cursor = conn.cursor()
+        cursor.execute(create_table_sql)
+        conn.commit()
+        conn.close()
+        return redirect(url_for('index'))
+    except sqlite3.Error as e:
+        return f"Error al crear la tabla: {e}", 500
 
 
 @app.route('/eliminar_tabla', methods=['POST'])
