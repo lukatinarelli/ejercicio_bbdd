@@ -37,6 +37,17 @@ function showSection(sectionId) {
 }
 
 
+document.querySelectorAll('.capitalize').forEach(element => {
+    if (element.tagName.toLowerCase() === 'select') {
+        element.querySelectorAll('option').forEach(option => {
+            option.innerHTML = option.innerHTML.toLowerCase().replace(/\b\w/g, (letra) => letra.toUpperCase());
+        });
+    } else {
+        element.innerHTML = element.innerHTML.toLowerCase().replace(/\b\w/g, (letra) => letra.toUpperCase());
+    }
+});
+
+
 // Manejar añadir columnas
 document.getElementById('boton_crear_columna').addEventListener('click', function () {
     const tableBody = document.querySelector('#columnas_tabla tbody');

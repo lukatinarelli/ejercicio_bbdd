@@ -175,19 +175,30 @@ def consultar_datos():
     conn.close()
 
     # Construir la tabla HTML
-    tabla_html = '<h3>Datos de la Tabla: {}</h3>'.format(table_name)
+    tabla_html = '<h3>Datos de la Tabla: {}</h3>'.format(table_name.capitalize())
     tabla_html += '<table><thead><tr>'
 
     if datos:
         # Añadir encabezados de columna y aplicar estilo si es Primary Key
         for col in columnas:
             col_name = col[1].capitalize()
+            
+            if col[2] == 'TEXT':
+                col_type = 'Texto'
+            
+            elif col[2] == 'INTEGER':
+                col_type = 'Número entero'
+            
+            elif col[2] == 'REAL':
+                col_type = 'Número decimal'
+            
             is_primary_key = col[5] == 1  # Verificar si es Primary Key con el índice 5
+            
             if is_primary_key:
                 # Añadir clase "primary-key" para aplicar estilo especial
-                tabla_html += f'<th title="Clave primaria" class="primary-key">{col_name}</th>'
+                tabla_html += f'<th title="Clave primaria" class="primary-key">{col_name.upper()}</th>'
             else:
-                tabla_html += f'<th>{col_name}</th>'
+                tabla_html += f'<th style="">{col_name}<br>Tipo: {col_type}</th>' #aqyuuuuuuuuuu
         
         tabla_html += '</tr></thead><tbody>'
         
@@ -212,7 +223,7 @@ def insertar_datos():
         
     columnas = cursor.execute(f"PRAGMA table_info({table_name})").fetchall()
     
-    insert_html = '<form id="inserta" action="/inserta" method="POST"> <h2>Insertar en la tabla: {}</h2>'.format(table_name)
+    insert_html = '<form id="inserta" action="/inserta" method="POST"> <h2>Insertar en la tabla: {}</h2>'.format(table_name.capitalize())
 
     insert_html += f'<input type="hidden" name="table_name_insertar" value="{table_name}">' # Nombre de la tabla
 
@@ -222,10 +233,16 @@ def insertar_datos():
         is_auto_increment = col[0] == 0 and (col[2].upper() == 'INTEGER' or col[2].upper() == 'INT') and col[5] == 1
         
         if is_auto_increment:
-            insert_html += f'<p>{col_name} (Auto Increment, no necesita valor)</p>'
+            insert_html += f'<p>{col_name} (Auto Increment, no necesita valor)</p></br>'
         else:
-            insert_html += f'<p>{col_name} ({col_type}):</p>'
-            insert_html += f'<input type="text" name="{col_name}" required><br>'
+            if col_type == 'Text':
+                insert_html += f'<p>{col_name} (Texto):</p>'
+                insert_html += f'<input type="text" name="{col_name}" required><br>'
+
+            elif col_type == 'Integer':
+                insert_html += f'<p>{col_name} (Número entero):</p>'
+                insert_html += f'<input type="number" name="{col_name}" title="Solo se aceptan números enteros" pattern="^[0-9]+$" required><br>'
+
                 
     insert_html += '</br> <input id="inserta_dato" type="submit" value="Insertar Datos" /> </form>'
   

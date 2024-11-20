@@ -75,7 +75,7 @@
                 {% if tablas %}
                     {% for tabla in tablas %}
                         <tr>
-                            <td style="text-transform: capitalize;">{{ tabla[0] }}</td>
+                            <td class="capitalize" style="text-transform: capitalize;">{{ tabla[0] }}</td>
                         </tr>
                     {% endfor %}
                 {% else %}
@@ -98,7 +98,7 @@
                 <option value="" disabled selected>Seleccione una tabla</option> <!-- Opción en blanco -->
                 {% if tablas %}
                     {% for tabla in tablas %}
-                        <option value="{{ tabla[0] }}">{{ tabla[0] }}</option>
+                        <option class="capitalize" value="{{ tabla[0] }}">{{ tabla[0] }}</option>
                     {% endfor %}
                 {% endif %}
             </select>
@@ -123,7 +123,7 @@
             <option value="" disabled selected>Seleccione una tabla</option> <!-- Opción en blanco -->
             {% if tablas %}
                 {% for tabla in tablas %}
-                    <option value="{{ tabla[0] }}">{{ tabla[0] }}</option>
+                    <option class="capitalize" value="{{ tabla[0] }}">{{ tabla[0] }}</option>
                 {% endfor %}
             {% endif %}
         </select>
@@ -145,7 +145,7 @@
             <option value="" disabled selected>Seleccione una tabla</option> <!-- Opción en blanco -->
             {% if tablas %}
                 {% for tabla in tablas %}
-                    <option value="{{ tabla[0] }}">{{ tabla[0] }}</option>
+                    <option class="capitalize" value="{{ tabla[0] }}">{{ tabla[0] }}</option>
                 {% endfor %}
             {% endif %}
         </select>
@@ -174,7 +174,7 @@
             <option value="" disabled selected>Seleccione una tabla</option> <!-- Opción en blanco -->
             {% if tablas %}
                 {% for tabla in tablas %}
-                    <option value="{{ tabla[0] }}">{{ tabla[0] }}</option>
+                    <option class="capitalize" value="{{ tabla[0] }}">{{ tabla[0] }}</option>
                 {% endfor %}
             {% endif %}
         </select>
