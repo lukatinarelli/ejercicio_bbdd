@@ -34,6 +34,15 @@ function showSection(sectionId) {
         const tableSelect = document.getElementById('table_name_para_eliminar');
         tableSelect.selectedIndex = 0; // Restablece a la opción en blanco
     }
+
+
+
+
+    // AQUI ------------------------------------
+
+
+
+
 }
 
 
