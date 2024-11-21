@@ -211,23 +211,37 @@
                 <span class="close">&times;</span>
                 <h3>Comandos SQLite - Ayuda Rápida</h3>
                 <ul>
-                    <li><strong>Crear tabla: </br>&nbsp;&nbsp;&nbsp;CREATE TABLE</strong> &nbsp; [IF NOT EXISTS] &nbsp; <i>{nombre_tabla}</i> &nbsp; <strong>(</strong>
-                        </br><i>&nbsp;&nbsp;&nbsp;{nombre_columna1}</i> &nbsp; <i>{tipo_columna1}</i><strong>,</strong>
-                        </br><i>&nbsp;&nbsp;&nbsp;{nombre_columna2}</i> &nbsp; <i>{tipo_columna2}</i><strong>,</strong> 
-                        </br>&nbsp;&nbsp;&nbsp;...<strong>);</strong></li>
+                    <li>
+                        <strong>Crear tabla: 
+                            </br>&nbsp;&nbsp;&nbsp;CREATE TABLE</strong> &nbsp; [IF NOT EXISTS] &nbsp; <i>{nombre_tabla}</i> &nbsp; <strong>(</strong>
+                            </br><i>&nbsp;&nbsp;&nbsp;{nombre_columna1}</i> &nbsp; <i>{tipo_columna1}</i><strong>,</strong>
+                            </br><i>&nbsp;&nbsp;&nbsp;{nombre_columna2}</i> &nbsp; <i>{tipo_columna2}</i><strong>,</strong> 
+                            </br>&nbsp;&nbsp;&nbsp;...<strong>);</strong>
+                    </li>
+
                     </br>
-                    <li><strong>Eliminar tabla: </br>&nbsp;&nbsp;&nbsp;DROP TABLE</strong> &nbsp; <i>{nombre_tabla}</i><strong>;</strong></li>
+
+                    <li>
+                        <strong>Eliminar tabla: 
+                            </br>&nbsp;&nbsp;&nbsp;DROP TABLE</strong> &nbsp; <i>{nombre_tabla}</i><strong>;</strong>
+                    </li>
+
                     </br>
-                    <li><strong>Seleccionar datos: </br>&nbsp;&nbsp;&nbsp;SELECT</strong> &nbsp; [ * ] &nbsp; <strong>/</strong> &nbsp; [{nombre_columna1}, {nombre_columna2}... ] &nbsp; <strong>FROM</strong> &nbsp; <i>{nombre_tabla}</i><strong>;</strong></li>
+
+                    <li>
+                        <strong>Seleccionar datos: 
+                            </br>&nbsp;&nbsp;&nbsp;SELECT</strong> &nbsp; [ * ] &nbsp; <strong>/</strong> &nbsp; [{nombre_columna1}, {nombre_columna2}... ] &nbsp; <strong>FROM</strong> &nbsp; <i>{nombre_tabla}</i><strong>;</strong>
+                    </li>
+
                     </br>
-                    <li><strong>Insertar datos: </br>&nbsp;&nbsp;&nbsp;INSERT INTO</strong> &nbsp; <i>{nombre_tabla}</i> &nbsp; <strong>(</strong><i>{nombre_columna1}</i><strong>,</strong> &nbsp; <i>{nombre_columna2}</i><strong>)</strong>
+
+                    <li><strong>Insertar datos: 
+                        </br>&nbsp;&nbsp;&nbsp;INSERT INTO</strong> &nbsp; <i>{nombre_tabla}</i> &nbsp; <strong>(</strong><i>{nombre_columna1}</i><strong>,</strong> &nbsp; <i>{nombre_columna2}</i><strong>)</strong>
                         </br><strong>&nbsp;&nbsp;&nbsp;VALUES</strong> &nbsp; <strong>(</strong><i>{nombre_valor1}</i><strong>,</strong> &nbsp; <i>{nombre_valor2}</i><strong>);</strong></li>
                     </br>
                     <li><strong>Actualizar datos:</strong> UPDATE nombre_tabla SET columna1 = valor1 WHERE condicion;`</li>
                     </br>
                     <li><strong>Eliminar datos: </br>&nbsp;&nbsp;&nbsp;DELETE FROM</strong> &nbsp; <i>{nombre_tabla}</i> &nbsp; <strong>WHERE</strong> &nbsp; <i>{condicion}</i> <strong>;</strong></li>
-                    </br>
-                    <li><strong>Comando especial:</strong> `.tables` para listar tablas.</li>
                     </br>
                     <li><strong>Tipos de dato:</strong></br>
                         <ol>
