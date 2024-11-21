@@ -150,7 +150,7 @@ function elimina_datos(id, tabla, columna) {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({ id: id, tabla: tabla, columna: columna }) // Enviar los tres parámetros
-    })
+    }) 
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
@@ -205,4 +205,27 @@ document.getElementById('boton_consola').addEventListener('click', function(even
         window.location.href = '/';
     })
     .catch(error => console.error('Error:', error));
+});
+
+
+// Referencias al botón y al modal
+const botonAyuda = document.getElementById('boton_ayuda');
+const modalAyuda = document.getElementById('modal-ayuda');
+const closeModal = document.querySelector('.close');
+
+// Mostrar el modal al hacer clic en el botón
+botonAyuda.addEventListener('click', () => {
+    modalAyuda.style.display = 'block';
+});
+
+// Cerrar el modal al hacer clic en la "X"
+closeModal.addEventListener('click', () => {
+    modalAyuda.style.display = 'none';
+});
+
+// Cerrar el modal al hacer clic fuera de la ventana modal
+window.addEventListener('click', (event) => {
+    if (event.target === modalAyuda) {
+        modalAyuda.style.display = 'none';
+    }
 });

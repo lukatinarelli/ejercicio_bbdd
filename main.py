@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session, send_from_directory
 from os import listdir, getcwd
 import sqlite3, os
+import logging
+logging.basicConfig(level=logging.DEBUG) # logging.info("")
+
 
 app = Flask(__name__)
 app.secret_key = 'clave_secreta'  # Configura una clave secreta para la sesión
@@ -356,7 +359,7 @@ def eliminar_datos():
             tabla_html += '<tr>'
             for valor in fila:
                 tabla_html += f'<td>{valor}</td>'
-            tabla_html += f'<td><button title="Eliminar registro" onclick="elimina_datos({fila[x]}, \'{table_name}\', \'{x}\')" id="boton{fila[x]}">Eliminar</button></td></tr>'
+            tabla_html += f'<td><button title="Eliminar registro" onclick="elimina_datos(\'{fila[x]}\', \'{table_name}\', \'{x}\')" id="boton{fila[x]}">Eliminar</button></td></tr>'
         tabla_html += '</tbody></table>'                          #
     else:
         tabla_html += '<p>No hay datos en esta tabla.</p>'
@@ -367,7 +370,7 @@ def eliminar_datos():
 @app.route('/elimina', methods=['POST'])
 def elimina_datos():
     data = request.get_json()
-    id_registro = data.get('id')      # Obtiene el ID del registro
+    id_registro = data.get('id')    # Obtiene el ID del registro
     nombre_tabla = data.get('tabla')  # Obtiene el nombre de la tabla
     columna = data.get('columna')  # Obtiene el numero de la columna
 
