@@ -183,20 +183,23 @@ def consultar_datos():
 
     if datos:
         # Añadir encabezados de columna y aplicar estilo si es Primary Key
+        col_types = []  # Lista para almacenar los tipos de columna
         for col in columnas:
             col_name = col[1].capitalize()
             
-            if col[2] == 'TEXT':
+            if col[2].upper() == 'TEXT':
                 col_type = 'Texto'
             
-            elif col[2] == 'INTEGER':
+            elif col[2].upper() == 'INTEGER':
                 col_type = 'Número entero'
             
-            elif col[2] == 'REAL':
+            elif col[2].upper() == 'REAL':
                 col_type = 'Número decimal'
                 
-            elif col[2] == 'BOOLEAN':
+            elif col[2].upper() == 'BOOLEAN':
                 col_type = 'Valor booleano'
+            
+            col_types.append(col[2].upper())  # Guardar el tipo de columna
             
             is_primary_key = col[5] == 1  # Verificar si es Primary Key con el índice 5
             
@@ -211,7 +214,10 @@ def consultar_datos():
         # Añadir filas de datos
         for fila in datos:
             tabla_html += '<tr>'
-            for valor in fila:
+            for idx, valor in enumerate(fila):
+                # Convertir valores booleanos
+                if col_types[idx] == 'BOOLEAN':
+                    valor = 'true' if valor == 1 else 'false'
                 tabla_html += f'<td>{valor}</td>'
             tabla_html += '</tr>'
         tabla_html += '</tbody></table></div>'
@@ -219,6 +225,7 @@ def consultar_datos():
         tabla_html += '<p>No hay datos en esta tabla.</p>'
 
     return tabla_html  # Devolver el HTML generado
+
 
 
 @app.route('/insertar', methods=['POST'])
@@ -257,7 +264,7 @@ def insertar_datos():
                     
                 elif col_type == 'Boolean':
                     insert_html += f'<p>{col_name} (Valor booleano):</p>'
-                    insert_html += f'<input type="checkbox" checked="checked" />'
+                    insert_html += f'<input type="checkbox" />'
             
             elif not_null == 0:
                 if col[5] == 1:
@@ -275,7 +282,7 @@ def insertar_datos():
 
                     elif col_type == 'Boolean':
                         insert_html += f'<p style="background-color: yellow; display: inline-block; font-size:18px;">{col_name} (Valor boolean y Clave primaria):</p></br>'
-                        insert_html += f'<input type="checkbox" checked="checked" />'
+                        insert_html += f'<input type="checkbox" />'
 
                 elif col[5] == 0:
                     if col_type == 'Text':
@@ -314,11 +321,18 @@ def inserta_datos():
     
     for col in columnas:
         col_name = col[1].capitalize()
-        is_auto_increment = (col[2].upper() == 'INTEGER' or col[2].upper() == 'INT') and col[5] == 1
+        col_type = col[2].upper()  # Tipo de la columna
+        is_auto_increment = (col_type == 'INTEGER' or col_type == 'INT') and col[5] == 1
         
         if not is_auto_increment:
-            data_to_insert[col_name] = request.form[col_name]
+            # Si es BOOLEAN y el input es un checkbox
+            if col_type == 'BOOLEAN':
+                # Checkbox envía 'on' si está marcado, nada si no lo está
+                data_to_insert[col_name] = 1 if col_name in request.form else 0
+            else:
+                data_to_insert[col_name] = request.form.get(col_name)
     
+    # Preparar la consulta SQL
     columns = ', '.join(data_to_insert.keys())
     placeholders = ', '.join(['?'] * len(data_to_insert))
     sql = f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders})"
