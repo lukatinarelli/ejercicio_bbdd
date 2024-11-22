@@ -257,7 +257,7 @@ def insertar_datos():
                     
                 elif col_type == 'Boolean':
                     insert_html += f'<p>{col_name} (Valor booleano):</p>'
-                    insert_html += f'<input type="number" name="{col_name}" title="" step="any" required><br>'
+                    insert_html += f'<input type="checkbox" checked="checked" />'
             
             elif not_null == 0:
                 if col[5] == 1:
@@ -273,6 +273,10 @@ def insertar_datos():
                         insert_html += f'<p style="background-color: yellow; display: inline-block; font-size:18px;">{col_name} (Número entero y Clave primaria):</p></br>'
                         insert_html += f'<input type="number" name="{col_name}" title="Solo se aceptan números" step="any" required><br>'
 
+                    elif col_type == 'Boolean':
+                        insert_html += f'<p style="background-color: yellow; display: inline-block; font-size:18px;">{col_name} (Valor boolean y Clave primaria):</p></br>'
+                        insert_html += f'<input type="checkbox" checked="checked" />'
+
                 elif col[5] == 0:
                     if col_type == 'Text':
                         insert_html += f'<p>{col_name} (Texto):</p>'
@@ -285,6 +289,10 @@ def insertar_datos():
                     elif col_type == 'Real':
                         insert_html += f'<p>{col_name} (Número entero):</p>'
                         insert_html += f'<input type="number" name="{col_name}" title="Solo se aceptan números" step="any"><br>'
+
+                    elif col_type == 'Boolean':
+                        insert_html += f'<p>{col_name} (Valor boolean):</p>'
+                        insert_html += f'<input type="checkbox" />'
                 
     insert_html += '</br> <input id="inserta_dato" type="submit" value="Insertar Datos" /> </form>'
   
