@@ -227,7 +227,6 @@ def consultar_datos():
     return tabla_html  # Devolver el HTML generado
 
 
-
 @app.route('/insertar', methods=['POST'])
 def insertar_datos():
     table_name = request.form['table_name_insertar']  # Obtener el nombre de la tabla del formulario
@@ -264,7 +263,7 @@ def insertar_datos():
                     
                 elif col_type == 'Boolean':
                     insert_html += f'<p>{col_name} (Valor booleano):</p>'
-                    insert_html += f'<input type="checkbox" />'
+                    insert_html += f'<input type="checkbox" name={col_name}>'
             
             elif not_null == 0:
                 if col[5] == 1:
@@ -282,7 +281,7 @@ def insertar_datos():
 
                     elif col_type == 'Boolean':
                         insert_html += f'<p style="background-color: yellow; display: inline-block; font-size:18px;">{col_name} (Valor boolean y Clave primaria):</p></br>'
-                        insert_html += f'<input type="checkbox" />'
+                        insert_html += f'<input type="checkbox" name={col_name}>'
 
                 elif col[5] == 0:
                     if col_type == 'Text':
@@ -299,7 +298,7 @@ def insertar_datos():
 
                     elif col_type == 'Boolean':
                         insert_html += f'<p>{col_name} (Valor boolean):</p>'
-                        insert_html += f'<input type="checkbox" />'
+                        insert_html += f'<input type="checkbox" name={col_name}>'
                 
     insert_html += '</br> <input id="inserta_dato" type="submit" value="Insertar Datos" /> </form>'
   
