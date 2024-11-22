@@ -141,7 +141,7 @@ tr:hover {
 .modal-content {
     position: relative;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-85%);
     font-family: Arial, sans-serif;
     background-color: #fff;
     margin: 15% auto;

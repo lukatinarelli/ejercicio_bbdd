@@ -194,6 +194,9 @@ def consultar_datos():
             
             elif col[2] == 'REAL':
                 col_type = 'Número decimal'
+                
+            elif col[2] == 'BOOLEAN':
+                col_type = 'Valor booleano'
             
             is_primary_key = col[5] == 1  # Verificar si es Primary Key con el índice 5
             
@@ -251,6 +254,10 @@ def insertar_datos():
                 elif col_type == 'Real':
                     insert_html += f'<p>{col_name} (Número entero):</p>'
                     insert_html += f'<input type="number" name="{col_name}" title="Solo se aceptan números" step="any" required><br>'
+                    
+                elif col_type == 'Boolean':
+                    insert_html += f'<p>{col_name} (Valor booleano):</p>'
+                    insert_html += f'<input type="number" name="{col_name}" title="" step="any" required><br>'
             
             elif not_null == 0:
                 if col[5] == 1:

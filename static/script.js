@@ -38,7 +38,7 @@ function showSection(sectionId) {
 
 
 
-    // AQUI ------------------------------------
+    // AQUI ------------------------------------ ????????????
 
 
 
@@ -70,6 +70,7 @@ document.getElementById('boton_crear_columna').addEventListener('click', functio
                 <option value="TEXT">TEXT</option>
                 <option value="INTEGER">INTEGER</option>
                 <option value="REAL">REAL</option>
+                <option value="BOOLEAN">BOOLEAN</option>
             </select>
         </td>
         <td><input type="checkbox" name="not_nulls[]"></td>
