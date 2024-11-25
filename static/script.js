@@ -78,6 +78,7 @@ document.getElementById('boton_crear_columna').addEventListener('click', functio
             <input type="checkbox" name="primary_keys[]" class="primary-key" ${numColumns === 0 ? '' : 'disabled'}>
         </td>
         <td><button type="button" class="eliminar_columna">Eliminar</button></td>
+        <td><button type="button" class="foreignkey_columna">Foreign key</button></td>
     `;
     tableBody.appendChild(newRow);
 });

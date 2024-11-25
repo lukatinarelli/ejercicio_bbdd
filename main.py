@@ -388,7 +388,7 @@ def eliminar_datos():
             for valor in fila:
                 tabla_html += f'<td>{valor}</td>'
             tabla_html += f'<td><button title="Eliminar registro" onclick="elimina_datos(\'{fila[x]}\', \'{table_name}\', \'{x}\')" id="boton{fila[x]}">Eliminar</button></td></tr>'
-        tabla_html += '</tbody></table>'                          #
+        tabla_html += '</tbody></table>'
     else:
         tabla_html += '<p>No hay datos en esta tabla.</p>'
 
