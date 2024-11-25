@@ -60,7 +60,26 @@
         </form>
     </section>
     
-
+    <div id="modal-foreignkey" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Configurar Foreign Key</h3>
+            <form id="foreign-key-form">
+                <label for="tabla_referencia">Tabla de referencia:</label>
+                <select id="tabla_referencia" required>
+                    <!-- Opciones dinámicas se agregarán con JavaScript -->
+                </select>
+                <br><br>
+                <label for="columna_referencia">Columna de referencia:</label>
+                <select id="columna_referencia" required>
+                    <!-- Opciones dinámicas se agregarán con JavaScript -->
+                </select>
+                <br><br>
+                <button type="button" id="guardar_foreignkey">Guardar</button>
+            </form>
+        </div>
+    </div>
+    
 
 
     <!-- Mostrar las tablas -->
