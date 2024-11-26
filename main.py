@@ -4,9 +4,14 @@ import sqlite3, os
 import logging
 logging.basicConfig(level=logging.DEBUG) # logging.info("")
 
-
 app = Flask(__name__)
 app.secret_key = 'clave_secreta'  # Configura una clave secreta para la sesión
+
+
+# Ruta a la carpeta databases
+DATABASE_FOLDER = os.path.join(os.path.dirname(__file__), 'databases')
+# Configurar Flask para guardar archivos en databases/
+app.config['UPLOAD_FOLDER'] = DATABASE_FOLDER
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -42,6 +47,12 @@ def index():
         return render_template('bbdd/select_db.html', bbdd=bbdd)  # Redirige a la raíz '/'
 
 
+# Ruta para cambiar la base de datos
+@app.route('/cambiar_bd', methods=['POST'])
+def cambiar_bd():
+    bbdd = listdir(getcwd() + '/databases')                
+    return render_template('bbdd/select_db.html', bbdd=bbdd)  # Redirige a la raíz '/'
+
 # Ruta para cerrar sesión, ahora acepta el método POST
 @app.route('/logout', methods=['POST'])
 def logout():
@@ -73,6 +84,28 @@ def crear_bbdd():
     session['bbdd'] = f"{bbdd}.db"
 
     return redirect(url_for('index'))
+
+
+@app.route('/importar_bbdd', methods=['POST'])
+def importar_bbdd():
+    if 'archivo_bd' not in request.files:
+        return "No se ha proporcionado ningún archivo", 400
+    
+    archivo = request.files['archivo_bd']
+    
+    if archivo.filename == '':
+        return "El archivo no tiene nombre", 400
+
+    if archivo and archivo.filename.endswith('.db'):
+        # Ruta donde guardarás la base de datos importada
+        ruta_guardado = os.path.join(app.config['UPLOAD_FOLDER'], archivo.filename)
+        archivo.save(ruta_guardado)
+        bbdd = listdir(getcwd() + '/databases')
+        return render_template('bbdd/select_db.html', bbdd=bbdd)  # Redirige a '/select_db'
+
+    else:
+        return "El archivo no es un archivo válido de base de datos", 400
+
 
 
 @app.route('/eliminar_db', methods=['POST'])

@@ -22,6 +22,12 @@
         <button onclick="showSection('modificar-datos')">Modificar Datos</button>
         <button onclick="showSection('eliminar-datos')">Eliminar Datos</button>
         <button onclick="showSection('consola-sql')">Consola SQL</button>
+        <!-- <button onclick="showSection('export_bbbd')">Exportar BBDD</button> -->
+
+        <form action="{{ url_for('cambiar_bd') }}" method="POST" style="display: inline;">
+            <button onclick="showSection('cambiar_bd')">Cambiar BD</button> 
+        </form>
+        
         
         <!-- Botón Salir en un formulario alineado con Flexbox -->
         <form action="{{ url_for('logout') }}" method="POST" style="display: inline;">

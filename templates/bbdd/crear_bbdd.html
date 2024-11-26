@@ -1,21 +1,35 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Crear Base de Datos</title>
-        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-        <link rel="stylesheet" href="/static/style.css">
-    </head>
-    <body>
-        <div class="selector_db">
-            <div class="cuadr"></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Base de Datos</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="selector_db">
+        <div class="cuadra"></div>
+
+        <!-- Formulario para crear una nueva base de datos -->
+        <section>
             <h1 class="titulo_db">Crear Base de Datos</h1>
             <form class="selector" action="{{ url_for('crear_bbdd') }}" method="POST">
-                <label>Nombre para la Base de Datos:</label>
-                <input type="text" name="nombre_bd_crear" required>
-                <button type="submit">Crear</button>
+                <label for="nombre_bd_crear">Nombre para la Base de Datos:</label>
+                <input type="text" id="nombre_bd_crear" name="nombre_bd_crear" required>
+                <button type="submit" class="btn-primary">Crear</button>
             </form>
-        </div>
-    </body>
+        </section>
+
+        <!-- Formulario para importar una base de datos -->
+        <section>
+            <h1 class="titulo_db">También puedes importar una Base de Datos</h1>
+            <form class="selector" action="{{ url_for('importar_bbdd') }}" method="POST" enctype="multipart/form-data">
+                <label for="nombre_bd_file">Selecciona un archivo .db:</label>
+                <input type="file" id="archivo_bd" name="archivo_bd" accept=".db" required>
+                <button type="submit" class="btn-secondary">Importar</button>
+            </form>
+        </section>
+    </div>
+</body>
 </html>
