@@ -165,8 +165,18 @@ tr:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.modal-modal_foreignkey {
-    transform: translateY(-805%);
+.modal_content {
+    position: relative;
+    top: 50%;
+    transform: translateY(-185%);
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .close {
@@ -179,6 +189,20 @@ tr:hover {
 
 .close:hover,
 .close:focus {
+    color: #000;
+    text-decoration: none;
+}
+
+.closee {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.closee:hover,
+.closee:focus {
     color: #000;
     text-decoration: none;
 }

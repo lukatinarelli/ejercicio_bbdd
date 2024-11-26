@@ -234,6 +234,7 @@ window.addEventListener('click', (event) => {
 
 
 const modalForeign = document.getElementById('modal-foreignkey');
+const closeModal2 = document.querySelector('.closee');
 
 document.getElementById('columnas_tabla').addEventListener('click', function (event) {
     if (event.target.classList.contains('foreignkey_columna')) {
@@ -242,10 +243,42 @@ document.getElementById('columnas_tabla').addEventListener('click', function (ev
     }
 });
 
-window.addEventListener('click', (event) => {
-    if (event.target === modalForeign) {
-        modalForeign.style.display = 'none';
-    } else if (event.target === modalForeign) {
-        modalForeign.style.display = 'none';
-    }
+// Cerrar el modal al hacer clic en la "X"
+closeModal2.addEventListener('click', () => {
+    modalForeign.style.display = 'none';
+});
+
+
+document.getElementById('tabla_referencia').addEventListener('change', function() {
+    const tableName = this.value;
+
+    // Realizar la solicitud al servidor
+    fetch('/get_columns', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ table_name: tableName }), // Enviar el nombre de la tabla
+    })
+    .then(response => response.json())
+    .then(data => {
+        const columnaReferencia = document.getElementById('columna_referencia');
+        columnaReferencia.innerHTML = ''; // Limpiar las opciones previas
+
+        if (data.status === 'success') {
+            // Agregar las nuevas opciones al select
+            data.columns.forEach(columna => {
+                const option = document.createElement('option');
+                option.value = columna;
+                option.textContent = columna;
+                columnaReferencia.appendChild(option);
+            });
+        } else {
+            alert(`Error: ${data.message}`);
+        }
+    })
+    .catch(error => {
+        console.error('Error al obtener columnas:', error);
+        alert('Hubo un error al cargar las columnas. Verifica la consola para más detalles.');
+    });
 });

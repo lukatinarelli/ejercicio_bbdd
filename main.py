@@ -216,6 +216,25 @@ def eliminar_tablas():
     return redirect(url_for('index'))
 
 
+@app.route('/get_columns', methods=['POST'])
+def get_columns():
+    data = request.get_json()
+    table_name = data.get('table_name')
+
+    if not table_name:
+        return jsonify({'status': 'error', 'message': 'No se especificó ninguna tabla'}), 400
+
+    # Obtén las columnas de la tabla (aquí depende de cómo manejes la DB)
+    try:
+        conn = connect_db()
+        cursor = conn.cursor()
+        cursor.execute(f"PRAGMA table_info({table_name})")  # Para SQLite
+        columns = [row[1] for row in cursor.fetchall()]  # Extrae el nombre de las columnas
+        return jsonify({'status': 'success', 'columns': columns})
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+
 @app.route('/consultar', methods=['POST'])
 def consultar_datos():
     table_name = request.form['table_name_consultar']  # Obtener el nombre de la tabla del formulario
