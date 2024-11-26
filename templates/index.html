@@ -22,7 +22,10 @@
         <button onclick="showSection('modificar-datos')">Modificar Datos</button>
         <button onclick="showSection('eliminar-datos')">Eliminar Datos</button>
         <button onclick="showSection('consola-sql')">Consola SQL</button>
-        <!-- <button onclick="showSection('export_bbbd')">Exportar BBDD</button> -->
+
+        <form action="{{ url_for('export') }}" method="GET" style="display: inline;">
+            <button onclick="showSection('export')">Exportar BBDD</button>
+        </form>
 
         <form action="{{ url_for('cambiar_bd') }}" method="POST" style="display: inline;">
             <button onclick="showSection('cambiar_bd')">Cambiar BD</button> 
@@ -212,9 +215,6 @@
             <!-- Aquí se insertará la información -->
         </div>
     </section>
-
-
-
 
 
     <!-- Consola SQLite -->

@@ -107,6 +107,25 @@ def importar_bbdd():
         return "El archivo no es un archivo válido de base de datos", 400
 
 
+@app.route('/export', methods=['GET'])
+def export():
+    bbdd = session.get('bbdd')
+
+    try:
+        # Ruta de la carpeta databases
+        database_folder = app.config['UPLOAD_FOLDER']
+
+        # Verificar si el archivo existe
+        archivo_path = os.path.join(database_folder, bbdd)
+        if not os.path.exists(archivo_path):
+            return f"No se encontró el archivo: {bbdd}", 404
+
+        # Enviar el archivo al cliente
+        return send_from_directory(directory=database_folder, path=bbdd, as_attachment=True)
+
+    except Exception as e:
+        return f"Error al exportar el archivo: {str(e)}", 500
+
 
 @app.route('/eliminar_db', methods=['POST'])
 def eliminar_db():
@@ -114,8 +133,8 @@ def eliminar_db():
 
     os.remove(getcwd() + '/databases/' + bbdd)
 
-    session.pop('user', None)  # Elimina al usuario de la sesión
-    return redirect(url_for('index'))  # Redirige al inicio de sesión  # problema ------------------------------------------------
+    bbdd = listdir(getcwd() + '/databases')
+    return render_template('bbdd/select_db.html', bbdd=bbdd)  # Redirige a '/select_db'
 
 
 def connect_db():
