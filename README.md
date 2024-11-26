@@ -10,6 +10,7 @@ Este es mi primer proyecto "grande", un gestor de bases de datos que permite a l
 - [Instalación](#instalación)
 - [Uso](#uso)
 - [Tecnologías Utilizadas](#tecnologías-utilizadas)
+- [Funcionalidades](#funcionalidades)
 - [Contribución](#contribución)
 
 
@@ -40,6 +41,16 @@ Si unicamente quiere usar la interfaz de texto:
  - Flask: framework web para el backend
  - SQLite: para la gestión de la base de datos
  - HTML/CSS/JavaScript: para la interfaz de usuario en el frontend
+
+
+## Funcionalidades
+ - Crear y eliminar bases de datos
+ - Importar y exportar bases de datos
+ - Crear y eliminar tablas
+ - Ver las tablas creadas
+ - Editar tablas ya creadas
+ - Insertar/Consultar/Modificar/Eliminar información de la base de datos
+ - Consola para escribir comandos de SQLITE
 
 
 ## Contribución
