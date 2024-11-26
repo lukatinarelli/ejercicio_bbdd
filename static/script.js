@@ -77,7 +77,7 @@ document.getElementById('boton_crear_columna').addEventListener('click', functio
         <td>
             <input type="checkbox" name="primary_keys[]" class="primary-key" ${numColumns === 0 ? '' : 'disabled'}>
         </td>
-        <td><button type="button" class="foreignkey_columna">Crear</button></td>
+        <td><button type="button" class="foreignkey_columna">Añadir</button></td>
         <td><button type="button" class="eliminar_columna">Eliminar</button></td>
     `;
     tableBody.appendChild(newRow);
@@ -229,5 +229,23 @@ closeModal.addEventListener('click', () => {
 window.addEventListener('click', (event) => {
     if (event.target === modalAyuda) {
         modalAyuda.style.display = 'none';
+    }
+});
+
+
+const modalForeign = document.getElementById('modal-foreignkey');
+
+document.getElementById('columnas_tabla').addEventListener('click', function (event) {
+    if (event.target.classList.contains('foreignkey_columna')) {
+        console.log("hello world :)")
+        modalForeign.style.display = 'block';
+    }
+});
+
+window.addEventListener('click', (event) => {
+    if (event.target === modalForeign) {
+        modalForeign.style.display = 'none';
+    } else if (event.target === modalForeign) {
+        modalForeign.style.display = 'none';
     }
 });
