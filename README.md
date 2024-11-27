@@ -41,7 +41,7 @@ Si unicamente quiere usar la interfaz de texto (con menos funcionalidades):
 ## Tecnologías Utilizadas
  - Python: lenguaje base de la aplicación
  - Flask: framework web para el backend
- - Login-Flask: 
+ - Flask-Login: almacenar el ID del usuario en la sesión y mecanismos para hacer login y logout.
  - SQLite: para la gestión de la base de datos
  - HTML/CSS/JavaScript: para la interfaz de usuario en el frontend
 
