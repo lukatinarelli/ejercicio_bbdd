@@ -46,7 +46,7 @@ Si unicamente quiere usar la interfaz de texto (con menos funcionalidades):
  - HTML/CSS/JavaScript: para la interfaz de usuario en el frontend
 
 
-## Funcionalidades
+## :hammer:Funcionalidades del proyecto
  - Crear y eliminar bases de datos
  - Importar y exportar bases de datos
  - Crear y eliminar tablas

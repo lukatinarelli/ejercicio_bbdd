@@ -1,7 +1,7 @@
 import os, sys
 import sqlite3
 
-conexion = sqlite3.connect("database/database.db")
+conexion = sqlite3.connect("databases/database.db")
 cursor = conexion.cursor()
 
 
