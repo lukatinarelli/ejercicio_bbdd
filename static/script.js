@@ -30,6 +30,9 @@ function showSection(sectionId) {
         // Limpia los resultados
         const resultadosDiv = document.getElementById('eliminar');
         resultadosDiv.innerHTML = ''; // Elimina el contenido de los resultados
+    } else if (sectionId === 'modificar-tabla') {
+        const tableSelect = document.getElementById('table_name_para_modificar');
+        tableSelect.selectedIndex = 0; // Restablece a la opción en blanco
     } else if (sectionId === 'eliminar-tabla') {
         const tableSelect = document.getElementById('table_name_para_eliminar');
         tableSelect.selectedIndex = 0; // Restablece a la opción en blanco
@@ -128,6 +131,23 @@ $(document).ready(function(){
         });
     });
 });
+
+/*
+$(document).ready(function(){
+    $('#table_name_modificar').change(function() {
+        var tableName = $(this).val(); // Obtener el valor seleccionado
+
+        $.ajax({
+            url: '/modificar',  // URL a la que se enviarán los datos
+            type: 'POST',  // Método de la solicitud
+            data: { table_name_modificar: tableName },  // Enviar el nombre de la tabla
+            success: function(response) {
+                $('#modificar').html(response);  // Insertar la respuesta en el div "resultados"
+            }
+        });
+    });
+});
+*/
 
 $(document).ready(function(){
     $('#table_name_eliminar').change(function() {
