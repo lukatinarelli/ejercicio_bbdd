@@ -205,8 +205,7 @@ def modificar_tabla():
     columnas = cursor.execute(f"PRAGMA table_info({table_name})").fetchall()
 
     # Construir la tabla HTML
-    tabla_html = '<h3>Datos de la Tabla: {}</h3>'.format(table_name.capitalize())
-    tabla_html += '<table><thead><tr>'
+    tabla_html = '<h3>Columnas de la Tabla: {}</h3>'.format(table_name.capitalize())
 
     # Añadir encabezados de columna y aplicar estilo si es Primary Key
     col_types = []  # Lista para almacenar los tipos de columna
@@ -233,7 +232,14 @@ def modificar_tabla():
             # Añadir clase "primary-key" para aplicar estilo especial
             tabla_html += f'<th title="Clave primaria" class="primary-key">{col_name.upper()}</th>'
         else:
-            tabla_html += f'<th style="width: 250px;">{col_name}<br>Tipo: {col_type}</th>'
+            tabla_html += f'''<p>Nombre columna: <input type="text" value={col_name}> Tipo: 
+            <select name="column_types[]" required>
+                <option value={col_type}>{col_type}</option>
+                <option value="TEXT">TEXT</option>
+                <option value="INTEGER">INTEGER</option>
+                <option value="REAL">REAL</option>
+                <option value="BOOLEAN">BOOLEAN</option>
+            </select></p>'''
     
     tabla_html += '</tr></thead><tbody>'
     
