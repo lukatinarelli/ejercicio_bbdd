@@ -134,14 +134,14 @@ $(document).ready(function(){
 
 $(document).ready(function(){
     $('#table_name_modificar1').change(function() {
-        var tableName = $(this).val(); // Obtener el valor seleccionado
+        var tableName = $(this).val();
 
         $.ajax({
-            url: '/modificar1',  // URL a la que se enviarán los datos
-            type: 'POST',  // Método de la solicitud
-            data: { table_name_modificar: tableName },  // Enviar el nombre de la tabla
+            url: '/modificar1',
+            type: 'POST',
+            data: { table_name_modificar: tableName },
             success: function(response) {
-                $('#modificar1').html(response);  // Insertar la respuesta en el div "resultados"
+                $('#modificar1').html(response); 
             }
         });
     });
