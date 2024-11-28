@@ -31,8 +31,12 @@ function showSection(sectionId) {
         const resultadosDiv = document.getElementById('eliminar');
         resultadosDiv.innerHTML = ''; // Elimina el contenido de los resultados
     } else if (sectionId === 'modificar-tabla') {
-        const tableSelect = document.getElementById('table_name_para_modificar');
+        const tableSelect = document.getElementById('table_name_modificar1');
         tableSelect.selectedIndex = 0; // Restablece a la opción en blanco
+
+        // Limpia los resultados
+        const resultadosDiv = document.getElementById('modificar1');
+        resultadosDiv.innerHTML = ''; // Elimina el contenido de los resultados
     } else if (sectionId === 'eliminar-tabla') {
         const tableSelect = document.getElementById('table_name_para_eliminar');
         tableSelect.selectedIndex = 0; // Restablece a la opción en blanco
