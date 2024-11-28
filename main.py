@@ -193,6 +193,126 @@ def create_table():
         return redirect(url_for('index'))
     except sqlite3.Error as e:
         return f"Error al crear la tabla: {e}", 500
+    
+
+@app.route('/modificar1', methods=['POST'])
+def modificar_tabla():
+    table_name = request.form['table_name_modificar']  # Obtener el nombre de la tabla del formulario
+    conn = connect_db()
+    cursor = conn.cursor()
+        
+    columnas = cursor.execute(f"PRAGMA table_info({table_name})").fetchall()
+    
+    insert_html = '<form id="inserta" action="/inserta" method="POST"> <h2>Insertar en la tabla: {}</h2>'.format(table_name.capitalize())
+
+    insert_html += f'<input type="hidden" name="table_name_insertar" value="{table_name}">' # Nombre de la tabla
+
+    for col in columnas:
+        col_name = col[1].capitalize()
+        col_type = col[2].capitalize()
+        not_null = col[3]  # Si es NOT NULL (1 = Sí, 0 = No)
+        is_auto_increment = col[0] == 0 and (col[2].upper() == 'INTEGER' or col[2].upper() == 'INT') and col[5] == 1
+        
+        if is_auto_increment:
+            insert_html += f'<p style="background-color: yellow; display: inline-block; font-size:18px;">{col_name.upper()} (Auto Increment, no necesita valor)</p></br>'
+        else:
+            if not_null == 1:         
+                if col_type == 'Text':
+                    insert_html += f'<p>{col_name} (Texto):</p>'
+                    insert_html += f'<input type="text" name="{col_name}" required><br>'
+
+                elif col_type == 'Integer':
+                    insert_html += f'<p>{col_name} (Número entero):</p>'
+                    insert_html += f'<input type="number" name="{col_name}" title="Solo se aceptan números enteros" step="1" required><br>'
+
+                elif col_type == 'Real':
+                    insert_html += f'<p>{col_name} (Número entero):</p>'
+                    insert_html += f'<input type="number" name="{col_name}" title="Solo se aceptan números" step="any" required><br>'
+                    
+                elif col_type == 'Boolean':
+                    insert_html += f'<p>{col_name} (Valor booleano):</p>'
+                    insert_html += f'<input type="checkbox" name={col_name}>'
+            
+            elif not_null == 0:
+                if col[5] == 1:
+                    if col_type == 'Text':
+                        insert_html += f'<p style="background-color: yellow; display: inline-block; font-size:18px;">{col_name} (Texto y Clave primaria):</p></br>'
+                        insert_html += f'<input type="text" name="{col_name}" required><br>'
+
+                    elif col_type == 'Integer':
+                        insert_html += f'<p style="background-color: yellow; display: inline-block; font-size:18px;">{col_name} (Número entero y Clave primaria):</p></br>'
+                        insert_html += f'<input type="number" name="{col_name}" title="Solo se aceptan números enteros" step="1" required><br>'
+
+                    elif col_type == 'Real':
+                        insert_html += f'<p style="background-color: yellow; display: inline-block; font-size:18px;">{col_name} (Número entero y Clave primaria):</p></br>'
+                        insert_html += f'<input type="number" name="{col_name}" title="Solo se aceptan números" step="any" required><br>'
+
+                    elif col_type == 'Boolean':
+                        insert_html += f'<p style="background-color: yellow; display: inline-block; font-size:18px;">{col_name} (Valor boolean y Clave primaria):</p></br>'
+                        insert_html += f'<input type="checkbox" name={col_name}>'
+
+                elif col[5] == 0:
+                    if col_type == 'Text':
+                        insert_html += f'<p>{col_name} (Texto):</p>'
+                        insert_html += f'<input type="text" name="{col_name}"><br>'
+
+                    elif col_type == 'Integer':
+                        insert_html += f'<p>{col_name} (Número entero):</p>'
+                        insert_html += f'<input type="number" name="{col_name}" title="Solo se aceptan números enteros" step="1"><br>'
+
+                    elif col_type == 'Real':
+                        insert_html += f'<p>{col_name} (Número entero):</p>'
+                        insert_html += f'<input type="number" name="{col_name}" title="Solo se aceptan números" step="any"><br>'
+
+                    elif col_type == 'Boolean':
+                        insert_html += f'<p>{col_name} (Valor boolean):</p>'
+                        insert_html += f'<input type="checkbox" name={col_name}>'
+                
+    insert_html += '</br> <input id="inserta_dato" type="submit" value="Insertar Datos" /> </form>'
+  
+    return insert_html  # Devolver el HTML generado
+
+
+@app.route('/modifica1', methods=['POST'])
+def modifica_tabla():
+    table_name = request.form['table_name_modificar']
+
+    conn = connect_db()
+    cursor = conn.cursor()
+    
+    # Obtener columnas de la tabla
+    columnas = cursor.execute(f"PRAGMA table_info({table_name})").fetchall()
+    
+    data_to_insert = {}
+    
+    for col in columnas:
+        col_name = col[1].capitalize()
+        col_type = col[2].upper()  # Tipo de la columna
+        is_auto_increment = (col_type == 'INTEGER' or col_type == 'INT') and col[5] == 1
+        
+        if not is_auto_increment:
+            # Si es BOOLEAN y el input es un checkbox
+            if col_type == 'BOOLEAN':
+                # Checkbox envía 'on' si está marcado, nada si no lo está
+                data_to_insert[col_name] = 1 if col_name in request.form else 0
+            else:
+                data_to_insert[col_name] = request.form.get(col_name)
+    
+    # Preparar la consulta SQL
+    columns = ', '.join(data_to_insert.keys())
+    placeholders = ', '.join(['?'] * len(data_to_insert))
+    sql = f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders})"
+    
+    try:
+        cursor.execute(sql, tuple(data_to_insert.values()))
+        conn.commit()
+    except Exception as e:
+        return f"Error: {str(e)}", 400  # Manejo de errores
+    finally:
+        conn.close()  # Asegúrate de cerrar la conexión
+    
+    # Redirigir a la página principal después de la inserción
+    return redirect(url_for('index'))  # 'index' es el nombre de la función de tu página principal
 
 
 @app.route('/eliminar_tabla', methods=['POST'])

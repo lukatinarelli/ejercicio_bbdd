@@ -132,22 +132,20 @@ $(document).ready(function(){
     });
 });
 
-/*
 $(document).ready(function(){
-    $('#table_name_modificar').change(function() {
+    $('#table_name_modificar1').change(function() {
         var tableName = $(this).val(); // Obtener el valor seleccionado
 
         $.ajax({
-            url: '/modificar',  // URL a la que se enviarán los datos
+            url: '/modificar1',  // URL a la que se enviarán los datos
             type: 'POST',  // Método de la solicitud
             data: { table_name_modificar: tableName },  // Enviar el nombre de la tabla
             success: function(response) {
-                $('#modificar').html(response);  // Insertar la respuesta en el div "resultados"
+                $('#modificar1').html(response);  // Insertar la respuesta en el div "resultados"
             }
         });
     });
 });
-*/
 
 $(document).ready(function(){
     $('#table_name_eliminar').change(function() {
