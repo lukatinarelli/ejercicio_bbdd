@@ -232,9 +232,8 @@ def modificar_tabla():
             # Añadir clase "primary-key" para aplicar estilo especial
             tabla_html += f'<th title="Clave primaria" class="primary-key">{col_name.upper()}</th>'
         else:
-            tabla_html += f'''<p>Nombre columna: <input type="text" value={col_name}> Tipo: 
+            tabla_html += f'''<p>Nombre columna: <input type="text" value={col_name}> Tipo ({col_type}): 
             <select name="column_types[]" required>
-                <option value={col_type}>{col_type}</option>
                 <option value="TEXT">TEXT</option>
                 <option value="INTEGER">INTEGER</option>
                 <option value="REAL">REAL</option>
@@ -252,6 +251,20 @@ def modificar_tabla():
 @app.route('/modifica1', methods=['POST'])
 def modifica_tabla():
     # Modifica la tabla
+    
+    '''
+    ALTER TABLE table-name RENAME TO new-table-name
+    
+    ALTER TABLE table-name RENAME column-name 
+
+    
+    
+    
+    '''
+    
+    
+    
+    
     pass
 
 
@@ -477,6 +490,68 @@ def inserta_datos():
     
     # Redirigir a la página principal después de la inserción
     return redirect(url_for('index'))  # 'index' es el nombre de la función de tu página principal
+
+
+'''
+@app.route('/modificar2', methods=['POST'])
+def modificar_tabla():
+    table_name = request.form['table_name_modificar']  # Obtener el nombre de la tabla del formulario
+    conn = connect_db()
+    cursor = conn.cursor()
+        
+    # Obtener las columnas y su información
+    columnas = cursor.execute(f"PRAGMA table_info({table_name})").fetchall()
+
+    # Construir la tabla HTML
+    tabla_html = '<h3>Columnas de la Tabla: {}</h3>'.format(table_name.capitalize())
+
+    # Añadir encabezados de columna y aplicar estilo si es Primary Key
+    col_types = []  # Lista para almacenar los tipos de columna
+    for col in columnas:
+        col_name = col[1].capitalize()
+        
+        if col[2].upper() == 'TEXT':
+            col_type = 'Texto'
+        
+        elif col[2].upper() == 'INTEGER':
+            col_type = 'Número entero'
+        
+        elif col[2].upper() == 'REAL':
+            col_type = 'Número decimal'
+            
+        elif col[2].upper() == 'BOOLEAN':
+            col_type = 'Valor booleano'
+        
+        col_types.append(col[2].upper())  # Guardar el tipo de columna
+        
+        is_primary_key = col[5] == 1  # Verificar si es Primary Key con el índice 5
+        
+        if is_primary_key:
+            # Añadir clase "primary-key" para aplicar estilo especial
+            tabla_html += f'<th title="Clave primaria" class="primary-key">{col_name.upper()}</th>'
+        else:
+            tabla_html += f''''''<p>Nombre columna: <input type="text" value={col_name}> Tipo: 
+            <select name="column_types[]" required>
+                <option value={col_type}>{col_type}</option>
+                <option value="TEXT">TEXT</option>
+                <option value="INTEGER">INTEGER</option>
+                <option value="REAL">REAL</option>
+                <option value="BOOLEAN">BOOLEAN</option>
+            </select></p>''''''
+    
+    tabla_html += '</tr></thead><tbody>'
+    
+    
+    tabla_html += '</br> <input id="modifica_tabla" type="submit" value="Modificar Tabla"/>'
+  
+    return tabla_html  # Devolver el HTML generado
+
+
+@app.route('/modifica2', methods=['POST'])
+def modifica_tabla():
+    # Modifica la tabla
+    pass
+'''
 
 
 @app.route('/eliminar', methods=['POST'])
