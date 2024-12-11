@@ -151,6 +151,23 @@ $(document).ready(function(){
     });
 });
 
+/*
+$(document).ready(function(){
+    $('#table_name_modificar2').change(function() {
+        var tableName = $(this).val();
+
+        $.ajax({
+            url: '/modificar2',
+            type: 'POST',
+            data: { table_name_modificar: tableName },
+            success: function(response) {
+                $('#modificar2').html(response); 
+            }
+        });
+    });
+});
+*/
+
 $(document).ready(function(){
     $('#table_name_eliminar').change(function() {
         var tableName = $(this).val(); // Obtener el valor seleccionado

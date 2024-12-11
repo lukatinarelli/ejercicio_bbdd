@@ -23,7 +23,7 @@
 
         <!-- Formulario para importar una base de datos -->
         <section>
-            <h1 class="titulo_db">También puedes importar una Base de Datos</h1>
+            <h1 class="titulo_db">Importar una Base de Datos</h1>
             <form class="selector" action="{{ url_for('importar_bbdd') }}" method="POST" enctype="multipart/form-data">
                 <label for="nombre_bd_file">Selecciona un archivo .db:</label>
                 <input type="file" id="archivo_bd" name="archivo_bd" accept=".db" required>

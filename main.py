@@ -254,17 +254,31 @@ def modifica_tabla():
     
     '''
     ALTER TABLE table-name RENAME TO new-table-name
-    
-    ALTER TABLE table-name RENAME column-name 
 
+        
+    ALTER TABLE table-name RENAME COLUMN column-name TO new-column-name
+
+    ALTER TABLE table-name RENAME column-name TO new-column-name
+
+
+    ALTER TABLE table-name ADD COLUMN column-def
+
+    ALTER TABLE table-name ADD column-def
+
+
+    ALTER TABLE table-name DROP COLUMN column-name
+    
+    ALTER TABLE table-name DROP column-name
     
     
     
+    column-def:
+    column-name type-name column-constraint
     '''
-    
-    
-    
-    
+
+
+
+
     pass
 
 
@@ -479,6 +493,7 @@ def inserta_datos():
     columns = ', '.join(data_to_insert.keys())
     placeholders = ', '.join(['?'] * len(data_to_insert))
     sql = f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders})"
+    sqlite = f"ALTER TABLE {table_name} RENAME TO {new_table_name}"
     
     try:
         cursor.execute(sql, tuple(data_to_insert.values()))
