@@ -1,4 +1,4 @@
-# Mi Proyecto de Gestor de Bases de Datos
+# [PROYECTO EN PROCESO] Mi Proyecto de Gestor de Bases de Datos
 
 ## Descripción
 Este es mi primer proyecto "grande", un gestor de bases de datos que permite a los usuarios realizar operaciones CRUD (Crear, Leer, Actualizar y Eliminar) sobre sus datos. Además, permite crear y eliminar tablas en la base de datos de forma sencilla. La aplicación incluye:
