@@ -1,4 +1,4 @@
-# [PROYECTO EN Proceso] 
+# [PROYECTO EN PROCESO] 
 # Mi Proyecto de Gestor de Bases de Datos
 
 ## Descripción
