@@ -18,8 +18,8 @@ Este es mi primer proyecto "grande", un gestor de bases de datos que permite a l
 ## Instalación
 1. Clona el repositorio:
    ```bash
-   git clone https://github.com/lukatinarelli/gestor_bbdd.git
-   cd gestor_bbdd
+   git clone https://github.com/lukatinarelli/ejercicio_bbdd.git
+   cd ejercicio_bbdd
 
 2. Instala las dependencias:
     ```bash
@@ -52,8 +52,8 @@ Si unicamente quiere usar la interfaz de texto (con menos funcionalidades):
  - Importar y exportar bases de datos
  - Crear y eliminar tablas
  - Ver las tablas creadas
- - Modificar tablas ya creadas
- - Insertar/Consultar/Modificar/Eliminar información de la base de datos
+ - Modificar tablas ya creadas [EN PROCESO] 
+ - Insertar/Consultar/Modificar [EN PROCESO]/Eliminar información de la base de datos
  - Consola para escribir comandos de SQLITE
 
 
