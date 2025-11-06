@@ -1,5 +1,5 @@
 > [!WARNING]
-> # [PROYECTO EN PROCESO] 
+> # :construction: Proyecto en construcción :construction:
 # Mi Proyecto de Gestor de Bases de Datos
 
 ## Descripción
